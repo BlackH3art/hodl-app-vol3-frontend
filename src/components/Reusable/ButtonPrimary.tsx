@@ -1,14 +1,16 @@
-import { FC, ReactNode } from "react";
+import { FC, FormEventHandler, ReactNode } from "react";
 
 
 interface Props {
   title?: string;
   children?: ReactNode;
+  type?: "button" | "submit" | "reset";
+  handler?: FormEventHandler | ( () => void );
 }
 
-const ButtonPrimary: FC<Props> = ({ children, title }) => {
+const ButtonPrimary: FC<Props> = ({ children, title, type, handler }) => {
   return(
-    <button className="btn-primary min-w-20 px-5 py-2 font-bold rounded-md mx-4">
+    <button type={type} className="btn-primary w-full px-5 flex justify-center py-2 font-semibold rounded-md" onClick={handler}>
       {title || children}
     </button>
   )

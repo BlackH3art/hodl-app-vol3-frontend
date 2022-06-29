@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LoginForm from './components/LoginForm/LoginForm';
 
 import Navigation from "./components/Navigation/Navigation";
+import SignUpForm from './components/SignUpForm/SignUpForm';
 
 function App() {
 
@@ -13,6 +15,8 @@ function App() {
         <Routes>
 
           <Route path="/" element={<div />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/signUp" element={<SignUpForm />} />
 
 
           <Route path="*" element={ <Navigate to="/" /> } />

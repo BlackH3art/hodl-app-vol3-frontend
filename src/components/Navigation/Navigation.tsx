@@ -36,11 +36,13 @@ const Navigation: FC = () => {
           )}
 
           {user ? (
-            <ButtonSecondary>
-              <FiLogOut color="white" size="1.5rem" />
-            </ButtonSecondary>
+            <div className="w-12">
+              <ButtonSecondary>
+                <FiLogOut color="white" size="1.5rem" />
+              </ButtonSecondary>
+            </div>
           ) : (
-            <Link to="/auth">
+            <Link to="/login">
               <ButtonPrimary title="Login" />
             </Link>
           )}

@@ -24,3 +24,38 @@ code {
 .shield, .btn-primary { 
   background-image: linear-gradient(90deg, var(--aqua) 0%, var(--green) 100%);
 }
+
+.my-label {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.my-label:hover, .my-label:focus-within {
+  outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.my-input {
+  outline: none;
+  background-color: transparent;
+}
+
+.glass1{
+  background: rgb(39, 51, 89, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+/* white glassmorphism */
+.glass2 {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
