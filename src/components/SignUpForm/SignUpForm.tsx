@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler, FC, FormEvent, FormEventHandler, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, FC, FormEvent, FormEventHandler, useContext, useState } from "react";
 
 import { FaLock } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from "react-toastify";
 
 import { login, signUp } from "../../api";
+import { UserContext } from "../../context/UserContext";
 import { MyResponse } from "../../interfaces/MyResponse";
 import { UserInterface } from "../../interfaces/UserInterface";
 
@@ -25,6 +26,7 @@ const SignUpForm: FC = () => {
   const [signUpData, setSignUpData] = useState<SignUpFormData>({ email: "", password: "", confirmPassword: "", terms: false });
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const { setUser } = useContext(UserContext);
 
   const handleChange: ChangeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
 
@@ -47,10 +49,10 @@ const SignUpForm: FC = () => {
 
       if(data.ok) {
         const { data: user }: { data: UserInterface } = await login({ email: signUpData.email, password: signUpData.password });
-        console.log(user)
-      }
 
-      setLoading(false);
+        setUser(user);
+        setLoading(false);
+      }
       
     } catch (error: any) {
       toast.error("Something went wrong!", { theme: "colored" }); 
