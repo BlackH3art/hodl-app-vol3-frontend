@@ -1,14 +1,19 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LoginForm from './components/LoginForm/LoginForm';
 
-import Navigation from "./components/Navigation/Navigation";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import Navigation from './components/Navigation/Navigation';
 import SignUpForm from './components/SignUpForm/SignUpForm';
+import LoginForm from './components/LoginForm/LoginForm';
 
 function App() {
 
   return (
     <Router>
       <div className="app w-full min-h-[100vh] bg-main">
+
+        <ToastContainer />
 
         <Navigation />
 

@@ -7,7 +7,7 @@ import ButtonPrimary from "../Reusable/ButtonPrimary";
 import ButtonSecondary from "../Reusable/ButtonSecondary";
 import MyInput from "../Reusable/MyInput";
 
-interface LoginData {
+export interface LoginData {
   email: string;
   password: string;
 }

@@ -2,12 +2,18 @@ import { ChangeEvent, ChangeEventHandler, FC, FormEvent, FormEventHandler, useSt
 
 import { FaLock } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
+import { toast } from "react-toastify";
+
+import { login, signUp } from "../../api";
+import { MyResponse } from "../../interfaces/MyResponse";
+import { UserInterface } from "../../interfaces/UserInterface";
 
 import ButtonPrimary from "../Reusable/ButtonPrimary";
 import ButtonSecondary from "../Reusable/ButtonSecondary";
 import MyInput from "../Reusable/MyInput";
 
-interface SignUpFormData {
+export interface SignUpFormData {
   email: string;
   password: string;
   confirmPassword: string;
@@ -17,16 +23,40 @@ interface SignUpFormData {
 const SignUpForm: FC = () => {
 
   const [signUpData, setSignUpData] = useState<SignUpFormData>({ email: "", password: "", confirmPassword: "", terms: false });
+  const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleChange: ChangeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
+
+    setError('');
+
     setSignUpData({
       ...signUpData,
       [e.target.name]: e.target.value
     })
   }
 
-  const handleSubmit: FormEventHandler = (e: FormEvent<HTMLInputElement>) => {
+  const handleSubmit: FormEventHandler = async (e: FormEvent<HTMLInputElement>) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+
+      const { data }: { data: MyResponse } = await signUp(signUpData);
+
+      if(data.ok) {
+        const { data: user }: { data: UserInterface } = await login({ email: signUpData.email, password: signUpData.password });
+        console.log(user)
+      }
+
+      setLoading(false);
+      
+    } catch (error: any) {
+      toast.error("Something went wrong!", { theme: "colored" }); 
+      setLoading(false);
+      setError(error.response.data.msg);
+    }
   }
 
   return (
@@ -37,6 +67,10 @@ const SignUpForm: FC = () => {
         <div className="h-14 w-14 mx-3 border-[1px] border-gray-600 p-2 rounded-full flex items-center justify-center">
           <FaLock color="white" size="1.5rem" />
         </div>
+
+        <p className="text-sm text-red-400 py-3">
+          {error}
+        </p>
 
         <form className="text-white w-full flex flex-col items-center">
 
@@ -74,7 +108,15 @@ const SignUpForm: FC = () => {
           
 
           <div className="mt-6 w-full">
-            <ButtonPrimary title="Create account" handler={handleSubmit} />
+            <ButtonPrimary handler={handleSubmit}>
+              {loading ? (
+                <ClipLoader size="1.5rem" />
+              ) : (
+                <p>
+                  Create account
+                </p>
+              )}
+            </ButtonPrimary>
           </div>
 
           <Link to="/login" className="mt-2 w-full">
