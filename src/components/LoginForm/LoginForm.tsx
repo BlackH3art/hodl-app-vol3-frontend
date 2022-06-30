@@ -1,7 +1,7 @@
 import { ChangeEvent, ChangeEventHandler, FC, FormEvent, FormEventHandler, useContext, useState } from "react";
 
 import { FaLock } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import { ClipLoader } from 'react-spinners';
 
@@ -25,6 +25,8 @@ const LoginForm: FC = () => {
   const [error, setError] = useState<string>('');
   const { setUser } = useContext(UserContext);
 
+  const navigate = useNavigate();
+
   const handleChange: ChangeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
 
     setError('');
@@ -46,6 +48,7 @@ const LoginForm: FC = () => {
       setUser(user);
       setLoading(false);
 
+      navigate('/app', { replace: true });
     } catch (error: any) {
       toast.error("Something went wrong!", { theme: "colored" }); 
       setLoading(false);

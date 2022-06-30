@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navigation from './components/Navigation/Navigation';
 import SignUpForm from './components/SignUpForm/SignUpForm';
 import LoginForm from './components/LoginForm/LoginForm';
+import HodlApp from './components/HodlApp/HodlApp';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<div />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signUp" element={<SignUpForm />} />
+          <Route path="/app/*" element={<HodlApp />} />
 
 
           <Route path="*" element={ <Navigate to="/" /> } />

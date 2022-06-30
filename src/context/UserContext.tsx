@@ -4,7 +4,7 @@ import { UserInterface } from "../interfaces/UserInterface";
 
 
 export const UserContext = createContext<UserContextInterface>({
-  user: {},
+  user: null,
   setUser: () => {},
 })
 
@@ -14,7 +14,7 @@ interface Props {
 
 const UserContextProvider: FC<Props> = ({ children }) => {
 
-  const [user, setUser] = useState<UserInterface | {}>({});
+  const [user, setUser] = useState<UserInterface | null>(null);
 
   return(
     <UserContext.Provider value={{
