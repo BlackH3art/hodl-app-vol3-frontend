@@ -3,6 +3,6 @@ export interface TransactionInterface {
   type: "buy" | "sell";
   quantity: number;
   entryPrice: number;
-  openData: Date;
+  openDate: Date;
   historyItemID: string;
 }
