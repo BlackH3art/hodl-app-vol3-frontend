@@ -9,8 +9,6 @@ import RowOpenPositions from "./RowOpenPositions";
 const TableOpenPositions: FC = () => {
 
   const { user } = useContext(UserContext);
-  console.log(user?.transactions);
-  
 
   const tableHeaders: string[] = [
     "#", "Ticker", "Price", "Capital", "Change", "PnL(%)", "Sell position", "Actions"
@@ -18,7 +16,7 @@ const TableOpenPositions: FC = () => {
 
   return(
     <>
-      <thead className="my-5">
+      <thead>
         <tr className="text-gray-300 border-b-[1px] border-gray-500">
           {tableHeaders.map((header: string, index: number) => (
             <HeaderCell key={index}>
@@ -40,7 +38,7 @@ const TableOpenPositions: FC = () => {
             entryPrice={item.entryPrice}
             quantity={item.quantity}
           />
-        ))) : ''}
+        ))) : null}
       </tbody>
 
     </>

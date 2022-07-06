@@ -21,6 +21,7 @@ const MySmallInput: FC<Props> = ({ name, type, placeholder, value, error, handle
         value={value}
         onChange={handler}
         autoComplete="off"
+        min={0}
       />
     </label>
   )

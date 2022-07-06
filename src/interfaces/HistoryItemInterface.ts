@@ -3,7 +3,7 @@ export interface HistoryItemInterface {
   type: "buy" | "sell";
   sellingPrice: number;
   entryPrice: number;
-  quanity: number;
+  quantity: number;
   sellingQuantity: number; 
   invested: number;
   gain: number;
