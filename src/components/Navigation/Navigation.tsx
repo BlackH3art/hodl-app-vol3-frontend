@@ -14,7 +14,7 @@ const Navigation: FC = () => {
   const { user } = useContext(UserContext);
 
   return(
-    <nav className="w-full h-24 border-b-[1px] border-gray-700 flex justify-center">
+    <nav className="w-full h-24 border-b-[1px] border-gray-700 bg-[#0c0c0c35] flex justify-center">
       <div className="w-4/5 flex items-center justify-between">
 
         <Link to="/">

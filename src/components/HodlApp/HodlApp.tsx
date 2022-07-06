@@ -1,5 +1,8 @@
 import { FC, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
+import TableHistory from "../TableHistory/TableHistory";
+import TableOpenPositions from "../TableOpenPositions/TableOpenPositions";
+import TableWallet from "../TableWallet/TableWallet";
 import AddTransactionForm from "./AddTransactionForm";
 import SumbMenu from "./SubMenu";
 
@@ -16,9 +19,20 @@ const HodlApp: FC = () => {
       {showAddTransactionForm && <AddTransactionForm showCallback={setShowAddTransaction} />}
 
 
-      <h1 className="text-6xl">
-        app
-      </h1>
+
+      <div className="table-wraper w-full xl:w-3/4">
+
+        <table className="w-full bg-gray-900" cellPadding="0" cellSpacing="0">
+          <Routes>
+
+            <Route path="positions" element={ <TableOpenPositions />} />
+            <Route path="wallet" element={ <TableWallet />} />
+            <Route path="history" element={ <TableHistory />} />
+
+          </Routes>
+        </table>
+
+      </div>
       
     </section>
   )

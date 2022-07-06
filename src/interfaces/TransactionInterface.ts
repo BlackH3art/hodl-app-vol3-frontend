@@ -5,4 +5,5 @@ export interface TransactionInterface {
   entryPrice: number;
   openDate: Date;
   historyItemID: string;
+  open: boolean;
 }

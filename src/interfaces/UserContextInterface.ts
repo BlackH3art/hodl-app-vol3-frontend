@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
-import { UserInterface } from "./UserInterface";
+import { UserDocument, UserInterface } from "./UserInterface";
 
 export interface UserContextInterface {
-  user: UserInterface | null;
+  user: UserInterface | null | UserDocument;
   setUser: Dispatch<SetStateAction<UserInterface | null>>
 }
