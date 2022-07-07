@@ -1,10 +1,10 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
 interface Props {
   text1?: string;
   text2?: string;
-  value1: number | string;
-  value2: number | string;
+  value1: number | string | ReactNode;
+  value2: number | string | ReactNode;
   pretext: boolean
 }
 

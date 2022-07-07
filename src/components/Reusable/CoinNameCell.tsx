@@ -7,15 +7,15 @@ interface Props {
 
 const CoinNameCell: FC<Props> = ({ image, name }) => (
   <>
-    <div className="flex">
+    <div className="flex items-center">
       {image ? (
-        <img className="pr-5" src={image} alt={`${name} logo`} />
+        <img className="w-10 h-10 w-full mr-5" src={image} alt={`${name} logo`} />
       ) : (
         <div className="h-6 w-6 rounded-full bg-gray-400 mr-2" />
       )}
 
       <p>
-        {name}
+        {name.toUpperCase()}
       </p>
     </div>
   </>

@@ -1,7 +1,14 @@
 import { FC } from "react";
+import { mockData } from "../../helpers/mockData";
+import { usdFormatter } from "../../helpers/usdFormatter";
+import { CoinData } from "../../interfaces/CoinData";
+
 import ActionCell from "../Reusable/ActionCell";
 import CoinNameCell from "../Reusable/CoinNameCell";
+import ColorValue from "../Reusable/ColorValue";
+import CryptoFormatter from "../Reusable/CryptoFromatter";
 import DoubleRowCell from "../Reusable/DoubleRowCell";
+import PercentCell from "../Reusable/PercentCell";
 import SellFormCell from "../Reusable/SellFormCell";
 import TableCell from "../Reusable/TableCell";
 
@@ -13,6 +20,9 @@ interface Props {
 }
 
 const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity }) => {
+
+  const filteredDetailsArray: CoinData[] = mockData.filter(item => item.symbol === ticker.toUpperCase());
+  const coinDetails = filteredDetailsArray[0];
 
   return(
     <tr className="row text-gray-400 border-b-[1px] border-gray-800">
@@ -26,6 +36,7 @@ const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity }) => {
       <TableCell>
         <CoinNameCell 
           name={ticker}
+          image={coinDetails.logo}
         />
       </TableCell>
 
@@ -33,16 +44,16 @@ const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity }) => {
         <DoubleRowCell
           text1="current:"
           text2="entry:"
-          value1={"22.21"}
-          value2={entryPrice}
+          value1={usdFormatter(coinDetails.currentPrice)}
+          value2={usdFormatter(entryPrice)}
           pretext
         />
       </TableCell>
 
       <TableCell>
         <DoubleRowCell 
-          value1={"q * price"}
-          value2={`${quantity} ${ticker}`}
+          value1={usdFormatter(quantity * coinDetails.currentPrice)}
+          value2={<CryptoFormatter quantity={quantity} ticker={ticker} />}
           pretext={false}
         />
       </TableCell>
@@ -51,16 +62,18 @@ const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity }) => {
         <DoubleRowCell 
           text1="change:"
           text2="invested:"
-          value1={"(q * p) - (q * ep)"}
-          value2={quantity * entryPrice}
+          value1={<ColorValue current={quantity * coinDetails.currentPrice} invested={quantity * entryPrice} setValue={false} />}
+          value2={usdFormatter(quantity * entryPrice)}
           pretext
         />
       </TableCell>
 
       <TableCell> 
-        <p className="text-center">
-          154%
-        </p>
+        <PercentCell 
+          current={coinDetails.currentPrice}
+          entry={entryPrice}
+          setValue={false}
+        />
       </TableCell>
 
       <TableCell>
