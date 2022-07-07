@@ -41,7 +41,7 @@ const RowHistory: FC<Props> = ({ nr, ticker, type, sellingPrice, entryPrice, qua
 
       <TableCell>
         <CoinNameCell 
-          name={ticker}
+          ticker={ticker}
           image={coinDetails.logo}
         />
       </TableCell>

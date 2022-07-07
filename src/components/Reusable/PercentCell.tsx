@@ -34,10 +34,10 @@ const PercentCell: FC<Props> = ({ current, entry, setValue, value }) => {
   }
 
   return(
-    <div className="flex">
-      {percentValue > 0 && (<><p className="flex items-center text-green-300"><FaCaretUp color=""/> {`${percentValue.toFixed(2)}%`}</p></>)}
+    <div className="flex justify-end">
+      {percentValue > 0 && (<><p className="flex items-center text-green-300"><FaCaretUp /> {`${percentValue.toFixed(2)}%`}</p></>)}
       {percentValue === 0 && (<><p className="text-gray-400">{`${percentValue.toFixed(2)}%`}</p></>)}
-      {percentValue < 0 && (<><p className="flex items-center text-red-300"><FaCaretDown color=""/> {`${Math.abs(percentValue).toFixed(2)}%`}</p></>)}
+      {percentValue < 0 && (<><p className="flex items-center text-red-300"><FaCaretDown /> {`${Math.abs(percentValue).toFixed(2)}%`}</p></>)}
     </div>
   )
 }
