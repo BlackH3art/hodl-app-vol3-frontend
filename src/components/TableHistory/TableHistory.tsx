@@ -23,12 +23,6 @@ const TableHistory: FC = () => {
     }) : user.history
   ) : (null);
 
-  console.log('user -->', Boolean(user));
-  console.log('ticker -->', Boolean(ticker));
-  
-  console.log(historyItemsArray);
-  
-
 
   return(
     <>

@@ -16,3 +16,4 @@ export const signUp = (signUpData: SignUpFormData) => API.post<MyResponse>('/use
 
 
 export const addTransaction = (transactionData: TransactionData) => API.post<MyResponse>('/transaction/add', transactionData );
+export const deleteTransaction = (transactionID: string) => API.delete<MyResponse>(`/transaction/delete/${transactionID}`);
