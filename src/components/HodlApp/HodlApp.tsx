@@ -28,6 +28,7 @@ const HodlApp: FC = () => {
             <Route path="positions" element={ <TableOpenPositions />} />
             <Route path="wallet" element={ <TableWallet />} />
             <Route path="history" element={ <TableHistory />} />
+            <Route path="history/:ticker" element={ <TableHistory />} />
 
           </Routes>
         </table>

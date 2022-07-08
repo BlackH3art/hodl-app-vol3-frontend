@@ -13,13 +13,14 @@ import SellFormCell from "../Reusable/SellFormCell";
 import TableCell from "../Reusable/TableCell";
 
 interface Props {
+  id: string;
   nr: number;
   ticker: string;
   entryPrice: number;
   quantity: number;
 }
 
-const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity }) => {
+const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity, id }) => {
 
   const filteredDetailsArray: CoinData[] = mockData.filter(item => item.symbol === ticker.toUpperCase());
   const coinDetails = filteredDetailsArray[0];
@@ -81,7 +82,7 @@ const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity }) => {
       </TableCell>
 
       <TableCell>
-        <ActionCell />
+        <ActionCell id={id} ticker={ticker} />
       </TableCell>
     </tr>
   )

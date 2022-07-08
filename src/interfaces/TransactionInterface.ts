@@ -1,4 +1,5 @@
 export interface TransactionInterface {
+  _id: string;
   ticker: string;
   type: "buy" | "sell";
   quantity: number;

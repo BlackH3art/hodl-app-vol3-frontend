@@ -32,6 +32,7 @@ const TableOpenPositions: FC = () => {
         {user ? (
           user.transactions.filter(item => item.open === true).map((item: TransactionInterface, index: number) => (
           <RowOpenPositions 
+            id={item._id}
             key={index}
             nr={index + 1}
             ticker={item.ticker}

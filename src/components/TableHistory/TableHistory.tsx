@@ -1,4 +1,5 @@
 import { FC, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { HistoryItemInterface } from "../../interfaces/HistoryItemInterface";
 import HeaderCell from "../Reusable/HeaderCell";
@@ -8,10 +9,26 @@ import RowHistory from "./RowHistory";
 const TableHistory: FC = () => {
 
   const { user } = useContext(UserContext);
+  const { ticker } = useParams()
 
   const tableHeaders: string[] = [
     "#", "Ticker", "Type", "Date", "Price", "Amount", "Invested", "PnL($)"
   ];
+
+  const historyItemsArray = user ? (
+    ticker ? user.history.filter(item => {
+      console.log(item.ticker, ticker);
+      
+      return item.ticker === ticker
+    }) : user.history
+  ) : (null);
+
+  console.log('user -->', Boolean(user));
+  console.log('ticker -->', Boolean(ticker));
+  
+  console.log(historyItemsArray);
+  
+
 
   return(
     <>
@@ -28,7 +45,7 @@ const TableHistory: FC = () => {
       </thead>
 
       <tbody>
-        {user ? user.history.map((item: HistoryItemInterface, index: number) => (
+        {historyItemsArray ? historyItemsArray.map((item: HistoryItemInterface, index: number) => (
           <RowHistory 
             nr={index + 1}
             key={index}
