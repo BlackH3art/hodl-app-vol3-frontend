@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import { mockData } from "../../helpers/mockData";
 import { usdFormatter } from "../../helpers/usdFormatter";
 import { CoinData } from "../../interfaces/CoinData";
@@ -18,9 +18,10 @@ interface Props {
   ticker: string;
   entryPrice: number;
   quantity: number;
+  showCallback: Dispatch<SetStateAction<boolean>>;
 }
 
-const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity, id }) => {
+const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity, id, showCallback }) => {
 
   const filteredDetailsArray: CoinData[] = mockData.filter(item => item.symbol === ticker.toUpperCase());
   const coinDetails = filteredDetailsArray[0];
@@ -82,7 +83,7 @@ const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity, id }) =
       </TableCell>
 
       <TableCell>
-        <ActionCell id={id} ticker={ticker} />
+        <ActionCell id={id} ticker={ticker} showCallback={showCallback} />
       </TableCell>
     </tr>
   )

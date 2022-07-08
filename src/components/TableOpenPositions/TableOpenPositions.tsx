@@ -1,12 +1,14 @@
-import { FC, useContext } from "react";
+import { Dispatch, FC, SetStateAction, useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { TransactionInterface } from "../../interfaces/TransactionInterface";
-import { UserDocument } from "../../interfaces/UserInterface";
 import HeaderCell from "../Reusable/HeaderCell";
 import RowOpenPositions from "./RowOpenPositions";
 
+interface Props {
+  showCallback: Dispatch<SetStateAction<boolean>>
+}
 
-const TableOpenPositions: FC = () => {
+const TableOpenPositions: FC<Props> = ({ showCallback }) => {
 
   const { user } = useContext(UserContext);
 
@@ -38,10 +40,10 @@ const TableOpenPositions: FC = () => {
             ticker={item.ticker}
             entryPrice={item.entryPrice}
             quantity={item.quantity}
+            showCallback={showCallback}
           />
         ))) : null}
       </tbody>
-
     </>
   );
 }
