@@ -2,7 +2,7 @@ import { FC } from "react";
 import { dateFormatter } from "../../helpers/dateFormatter";
 import { mockData } from "../../helpers/mockData";
 import { usdFormatter } from "../../helpers/usdFormatter";
-import { CoinData } from "../../interfaces/CoinData";
+import { CoinDataInterface } from "../../interfaces/CoinDataInterface";
 import CoinNameCell from "../Reusable/CoinNameCell";
 import ColorValue from "../Reusable/ColorValue";
 import CryptoFormatter from "../Reusable/CryptoFromatter";
@@ -27,7 +27,7 @@ interface Props {
 
 const RowHistory: FC<Props> = ({ nr, ticker, type, sellingPrice, entryPrice, quantity, sellingQuantity, invested, gain, closeDate, openDate }) => {
 
-  const filteredDetailsArray: CoinData[] = mockData.filter(item => item.symbol === ticker.toUpperCase());
+  const filteredDetailsArray: CoinDataInterface[] = mockData.filter(item => item.symbol === ticker.toUpperCase());
   const coinDetails = filteredDetailsArray[0];
 
   return(

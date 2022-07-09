@@ -1,6 +1,6 @@
-export interface CoinData { 
+export interface CoinDataInterface {
   name: string;
-  symbol: string;
+  ticker: string;
   logo: string;
   currentPrice: number;
   change1h: number;

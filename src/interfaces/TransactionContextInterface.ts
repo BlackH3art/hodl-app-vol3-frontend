@@ -11,4 +11,5 @@ export interface TransactionContextInterface {
   fetchWallet: () => void;
   history: HistoryItemInterface[];
   fetchHistory: () => void;
+  fetchAll: () => void;
 }

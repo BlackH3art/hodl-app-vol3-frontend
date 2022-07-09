@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { mockData } from "../../helpers/mockData";
 import { usdFormatter } from "../../helpers/usdFormatter";
-import { CoinData } from "../../interfaces/CoinData";
+import { CoinData } from "../../interfaces/CoinDataInterface";
 import CoinNameCell from "../Reusable/CoinNameCell";
 import ColorValue from "../Reusable/ColorValue";
 import CryptoFormatter from "../Reusable/CryptoFromatter";

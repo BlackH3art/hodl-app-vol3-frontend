@@ -1,6 +1,10 @@
-import { FC, useContext, useState } from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { FC, useContext, useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import TransactionContextProvider, { TransactionContext } from "../../context/TransactionContext";
+
+import { getCoinsData } from "../../api";
+import { setCoinsData } from "../../redux/features/coinsData-slice";
+
 import TableHistory from "../TableHistory/TableHistory";
 import TableOpenPositions from "../TableOpenPositions/TableOpenPositions";
 import TableWallet from "../TableWallet/TableWallet";
@@ -11,6 +15,20 @@ import SumbMenu from "./SubMenu";
 const HodlApp: FC = () => {
 
   const [showAddTransaction, setShowTransaction] = useState<boolean>(false);
+  const { fetchAll } = useContext(TransactionContext);
+
+  useEffect(() => {
+
+    async function getData() {
+
+      fetchAll();
+      const { data: coinsData } = await getCoinsData();
+      setCoinsData(coinsData);
+    }
+    
+    getData();
+
+  }, []);
 
   return(
     <TransactionContextProvider>

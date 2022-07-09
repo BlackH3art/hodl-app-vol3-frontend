@@ -14,7 +14,8 @@ export const TransactionContext = createContext<TransactionContextInterface>({
   wallet: [],
   fetchWallet: async () => {},
   history: [],
-  fetchHistory: async () => {}
+  fetchHistory: async () => {},
+  fetchAll: () => {},
 });
 
 interface Props {
@@ -67,6 +68,17 @@ const TransactionContextProvider: FC<Props> = ({ children }) => {
     }
   }
 
+
+
+  const fetchAll = () => {
+
+    fetchTransactions();
+    fetchWallet();
+    fetchHistory();
+  }
+
+
+
   return(
     <TransactionContext.Provider value={{
       idToEdit,
@@ -77,6 +89,7 @@ const TransactionContextProvider: FC<Props> = ({ children }) => {
       fetchWallet,
       history,
       fetchHistory,
+      fetchAll,
     }}>
       {children}
     </TransactionContext.Provider>

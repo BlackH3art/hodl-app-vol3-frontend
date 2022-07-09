@@ -1,4 +1,4 @@
-import { CoinData } from "../interfaces/CoinData";
+import { CoinData } from "../interfaces/CoinDataInterface";
 import { AverageTransaction } from "../interfaces/TransactionInterface";
 
 export const mockData: CoinData[] = [
