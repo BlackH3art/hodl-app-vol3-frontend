@@ -1,6 +1,6 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { UserContext } from "../../context/UserContext";
+import { TransactionContext } from "../../context/TransactionContext";
 import { HistoryItemInterface } from "../../interfaces/HistoryItemInterface";
 import HeaderCell from "../Reusable/HeaderCell";
 import RowHistory from "./RowHistory";
@@ -8,19 +8,19 @@ import RowHistory from "./RowHistory";
 
 const TableHistory: FC = () => {
 
-  const { user } = useContext(UserContext);
-  const { ticker } = useParams()
+  const { history, fetchHistory } = useContext(TransactionContext);
+  const { ticker } = useParams();
+
+  useEffect(() => {
+    fetchHistory();
+  }, []);
 
   const tableHeaders: string[] = [
     "#", "Ticker", "Type", "Date", "Price", "Amount", "Invested", "PnL($)"
   ];
 
-  const historyItemsArray = user ? (
-    ticker ? user.history.filter(item => {
-      console.log(item.ticker, ticker);
-      
-      return item.ticker === ticker
-    }) : user.history
+  const historyItemsArray = history ? (
+    ticker ? history.filter(item => item.ticker === ticker) : history
   ) : (null);
 
 

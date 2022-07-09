@@ -2,7 +2,9 @@ import axios from 'axios';
 import { TransactionData } from '../components/HodlApp/AddTransactionForm';
 import { LoginData } from '../components/LoginForm/LoginForm';
 import { SignUpFormData } from '../components/SignUpForm/SignUpForm';
+import { HistoryItemInterface } from '../interfaces/HistoryItemInterface';
 import { MyResponse } from '../interfaces/MyResponse';
+import { AverageTransaction, TransactionInterface } from '../interfaces/TransactionInterface';
 import { UserInterface } from '../interfaces/UserInterface';
 
 const API = axios.create({ 
@@ -13,6 +15,11 @@ const API = axios.create({
 
 export const login = (loginData: LoginData) => API.post<UserInterface>('/auth/login', loginData);
 export const signUp = (signUpData: SignUpFormData) => API.post<MyResponse>('/user/register', signUpData);
+
+
+export const getTransactions = () => API.get<TransactionInterface[]>('/transaction/all');
+export const getAverage = () => API.get<AverageTransaction[]>('/transaction/average');
+export const getHistory = () => API.get<HistoryItemInterface[]>('/transaction/history');
 
 
 export const addTransaction = (transactionData: TransactionData) => API.post<MyResponse>('/transaction/add', transactionData );

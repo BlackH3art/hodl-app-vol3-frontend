@@ -1,4 +1,5 @@
 export interface HistoryItemInterface {
+  _id: string;
   ticker: string;
   type: "buy" | "sell";
   sellingPrice: number;

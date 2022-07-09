@@ -1,5 +1,5 @@
 import { CoinData } from "../interfaces/CoinData";
-import { WalletItemInterface } from "../interfaces/WalletItemInterface";
+import { AverageTransaction } from "../interfaces/TransactionInterface";
 
 export const mockData: CoinData[] = [
   { name: "Bitcoin", symbol: "BTC", logo: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png", currentPrice: 20265.39, change1h: 0.15, change24h: -5.32, change7d: 22.12 },
@@ -8,12 +8,13 @@ export const mockData: CoinData[] = [
   { name: "Cardano", symbol: "ADA", logo: "https://s2.coinmarketcap.com/static/img/coins/64x64/2010.png", currentPrice: 0.46, change1h: 1.07, change24h: -3.11, change7d: -1.09 },
   { name: "Chiliz", symbol: "CHZ", logo: "https://s2.coinmarketcap.com/static/img/coins/64x64/4066.png", currentPrice: 0.16, change1h: 1.11, change24h: -7.88, change7d: -2.33 },
   { name: "Binance Coin", symbol: "BNB", logo: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png", currentPrice: 235.67, change1h: -0.55, change24h: 12.80, change7d: 12.33 },
-  { name: "VeChain", symbol: "VET", logo: "https://s2.coinmarketcap.com/static/img/coins/64x64/3077.png", currentPrice: 0.0217, change1h: -1.08, change24h: 0, change7d: 9.89 }
+  { name: "VeChain", symbol: "VET", logo: "https://s2.coinmarketcap.com/static/img/coins/64x64/3077.png", currentPrice: 0.0217, change1h: -1.08, change24h: 0, change7d: 9.89 },
+  { name: "Solana", symbol: "SOL", logo: "https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png", currentPrice: 38.0217, change1h: -1.08, change24h: 0, change7d: 9.89 },
 ]
 
-export const averageWallet: WalletItemInterface[] = [
-  { name: "Bitcoin", ticker: "BTC", averagePrice: 7643.62, totalAmount: 2.123225 },
-  { name: "Ethereum", ticker: "ETH", averagePrice: 712.76, totalAmount: 4.1235235 },
-  { name: "Binance Coin", ticker: "BNB", averagePrice: 41.22, totalAmount: 22.645323 },
-  { name: "Cardano", ticker: "ADA", averagePrice: 0.0512, totalAmount: 22.645323 },
+export const averageWallet: AverageTransaction[] = [
+  { _id: "BTC", averagePrice: 7643.62, quantitySum: 2.123225 },
+  { _id: "ETH", averagePrice: 712.76, quantitySum: 4.1235235 },
+  { _id: "BNB", averagePrice: 41.22, quantitySum: 22.645323 },
+  { _id: "ADA", averagePrice: 0.0512, quantitySum: 22.645323 },
 ]

@@ -1,5 +1,5 @@
-import { Dispatch, FC, SetStateAction, useContext } from "react";
-import { UserContext } from "../../context/UserContext";
+import { Dispatch, FC, SetStateAction, useContext, useEffect } from "react";
+import { TransactionContext } from "../../context/TransactionContext";
 import { TransactionInterface } from "../../interfaces/TransactionInterface";
 import HeaderCell from "../Reusable/HeaderCell";
 import RowOpenPositions from "./RowOpenPositions";
@@ -10,7 +10,11 @@ interface Props {
 
 const TableOpenPositions: FC<Props> = ({ showCallback }) => {
 
-  const { user } = useContext(UserContext);
+  const { transactions, fetchTransactions } = useContext(TransactionContext);
+
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
 
   const tableHeaders: string[] = [
     "#", "Ticker", "Price", "Capital", "Change", "PnL(%)", "Sell position", "Actions"
@@ -31,8 +35,8 @@ const TableOpenPositions: FC<Props> = ({ showCallback }) => {
       </thead>
 
       <tbody>
-        {user ? (
-          user.transactions.filter(item => item.open === true).map((item: TransactionInterface, index: number) => (
+        {transactions ? (
+          transactions.filter(item => item.open === true).map((item: TransactionInterface, index: number) => (
           <RowOpenPositions 
             id={item._id}
             key={index}

@@ -8,3 +8,9 @@ export interface TransactionInterface {
   historyItemID: string;
   open: boolean;
 }
+
+export interface AverageTransaction {
+  _id: string;
+  averagePrice: number;
+  quantitySum: number;
+}

@@ -1,6 +1,5 @@
 export interface WalletItemInterface {
-  name: string;
-  ticker: string;
+  _id: string;
   averagePrice: number;
   totalAmount: number;
 }

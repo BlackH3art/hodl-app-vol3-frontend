@@ -1,13 +1,19 @@
-import { FC } from "react";
-import { averageWallet } from "../../helpers/mockData";
-import { WalletItemInterface } from "../../interfaces/WalletItemInterface";
+import { FC, useContext, useEffect } from "react";
+import { TransactionContext } from "../../context/TransactionContext";
+import { AverageTransaction } from "../../interfaces/TransactionInterface";
 import HeaderCell from "../Reusable/HeaderCell";
 import RowWallet from "./RowWallet";
 
 
 const TableWallet: FC = () => {
 
-  const averageTransactions = averageWallet;
+  const { fetchWallet, wallet } = useContext(TransactionContext);
+
+  useEffect(() => {
+
+    fetchWallet();
+    
+  }, []);
 
   const tableHeaders: string[] = [
     "#", "Coin", "Ticker", "Price", "1h", "24h", "7 days", "Shares", "Profit/Loss"
@@ -28,13 +34,12 @@ const TableWallet: FC = () => {
       </thead>
 
       <tbody>
-        {averageTransactions.map((item: WalletItemInterface, index: number) => (
+        {wallet.map((item: AverageTransaction, index: number) => (
           <RowWallet 
             key={index}
             nr={index + 1}
-            name={item.name}
-            ticker={item.ticker}
-            totalAmount={item.totalAmount}
+            ticker={item._id}
+            quantitySum={item.quantitySum}
             averagePrice={item.averagePrice}
           />
         ))}

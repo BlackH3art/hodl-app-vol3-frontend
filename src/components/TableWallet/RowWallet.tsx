@@ -11,14 +11,13 @@ import TableCell from "../Reusable/TableCell";
 
 interface Props {
   ticker: string;
-  name: string;
   averagePrice: number;
-  totalAmount: number;
+  quantitySum: number;
   nr: number;
 }
 
 
-const RowWallet: FC<Props> = ({ nr, ticker, name, averagePrice, totalAmount }) => {
+const RowWallet: FC<Props> = ({ nr, ticker, averagePrice, quantitySum }) => {
 
   const filteredDetailsArray: CoinData[] = mockData.filter(item => item.symbol === ticker.toUpperCase());
   const coinDetails = filteredDetailsArray[0];
@@ -36,7 +35,7 @@ const RowWallet: FC<Props> = ({ nr, ticker, name, averagePrice, totalAmount }) =
 
       <TableCell>
         <CoinNameCell 
-          name={name}
+          name={coinDetails.name}
           image={coinDetails.logo}
         />
       </TableCell>
@@ -78,8 +77,8 @@ const RowWallet: FC<Props> = ({ nr, ticker, name, averagePrice, totalAmount }) =
 
       <TableCell>
         <DoubleRowCell 
-          value1={usdFormatter(totalAmount * coinDetails.currentPrice)}
-          value2={<CryptoFormatter quantity={totalAmount} ticker={ticker} />}
+          value1={usdFormatter(quantitySum * coinDetails.currentPrice)}
+          value2={<CryptoFormatter quantity={quantitySum} ticker={ticker} />}
           pretext={false}
         />
       </TableCell>
@@ -87,8 +86,8 @@ const RowWallet: FC<Props> = ({ nr, ticker, name, averagePrice, totalAmount }) =
 
       <TableCell>
         <DoubleRowCell 
-          value1={<ColorValue current={totalAmount * coinDetails.currentPrice} invested={totalAmount * averagePrice} setValue={false} />}
-          value2={<PercentCell current={totalAmount * coinDetails.currentPrice} entry={totalAmount * averagePrice} setValue={false} />}
+          value1={<ColorValue current={quantitySum * coinDetails.currentPrice} invested={quantitySum * averagePrice} setValue={false} />}
+          value2={<PercentCell current={quantitySum * coinDetails.currentPrice} entry={quantitySum * averagePrice} setValue={false} />}
           pretext={false}
         />
       </TableCell>
