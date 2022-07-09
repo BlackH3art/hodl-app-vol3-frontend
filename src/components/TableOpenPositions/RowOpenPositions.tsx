@@ -1,7 +1,9 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import { mockData } from "../../helpers/mockData";
 import { usdFormatter } from "../../helpers/usdFormatter";
 import { CoinDataInterface } from "../../interfaces/CoinDataInterface";
+
+import { RootState } from "../../redux/store";
+import { useSelector } from 'react-redux';
 
 import ActionCell from "../Reusable/ActionCell";
 import CoinNameCell from "../Reusable/CoinNameCell";
@@ -23,7 +25,9 @@ interface Props {
 
 const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity, id, showCallback }) => {
 
-  const filteredDetailsArray: CoinDataInterface[] = mockData.filter(item => item.symbol === ticker.toUpperCase());
+  const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
+  
+  const filteredDetailsArray: CoinDataInterface[] = coinsData.filter(item => item.ticker === ticker.toUpperCase());
   const coinDetails = filteredDetailsArray[0];
 
   return(

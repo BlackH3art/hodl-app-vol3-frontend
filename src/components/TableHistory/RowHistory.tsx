@@ -1,13 +1,16 @@
 import { FC } from "react";
 import { dateFormatter } from "../../helpers/dateFormatter";
-import { mockData } from "../../helpers/mockData";
 import { usdFormatter } from "../../helpers/usdFormatter";
+
 import { CoinDataInterface } from "../../interfaces/CoinDataInterface";
+
+import { RootState } from "../../redux/store";
+import { useSelector } from 'react-redux';
+
 import CoinNameCell from "../Reusable/CoinNameCell";
 import ColorValue from "../Reusable/ColorValue";
 import CryptoFormatter from "../Reusable/CryptoFromatter";
 import DoubleROwHistoryCell from "../Reusable/DoubleRowHistoryCell";
-
 import TableCell from "../Reusable/TableCell";
 
 
@@ -27,7 +30,9 @@ interface Props {
 
 const RowHistory: FC<Props> = ({ nr, ticker, type, sellingPrice, entryPrice, quantity, sellingQuantity, invested, gain, closeDate, openDate }) => {
 
-  const filteredDetailsArray: CoinDataInterface[] = mockData.filter(item => item.symbol === ticker.toUpperCase());
+  const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
+
+  const filteredDetailsArray: CoinDataInterface[] = coinsData.filter(item => item.ticker === ticker.toUpperCase());
   const coinDetails = filteredDetailsArray[0];
 
   return(

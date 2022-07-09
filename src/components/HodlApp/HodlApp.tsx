@@ -4,6 +4,7 @@ import TransactionContextProvider, { TransactionContext } from "../../context/Tr
 
 import { getCoinsData } from "../../api";
 import { setCoinsData } from "../../redux/features/coinsData-slice";
+import { useDispatch } from 'react-redux';
 
 import TableHistory from "../TableHistory/TableHistory";
 import TableOpenPositions from "../TableOpenPositions/TableOpenPositions";
@@ -17,13 +18,16 @@ const HodlApp: FC = () => {
   const [showAddTransaction, setShowTransaction] = useState<boolean>(false);
   const { fetchAll } = useContext(TransactionContext);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
 
     async function getData() {
 
       fetchAll();
       const { data: coinsData } = await getCoinsData();
-      setCoinsData(coinsData);
+      
+      dispatch(setCoinsData(coinsData));
     }
     
     getData();

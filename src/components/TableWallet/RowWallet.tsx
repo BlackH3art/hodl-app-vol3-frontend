@@ -1,7 +1,11 @@
 import { FC } from "react";
 import { mockData } from "../../helpers/mockData";
 import { usdFormatter } from "../../helpers/usdFormatter";
-import { CoinData } from "../../interfaces/CoinDataInterface";
+import { CoinDataInterface } from "../../interfaces/CoinDataInterface";
+
+import { RootState } from "../../redux/store";
+import { useSelector } from 'react-redux';
+
 import CoinNameCell from "../Reusable/CoinNameCell";
 import ColorValue from "../Reusable/ColorValue";
 import CryptoFormatter from "../Reusable/CryptoFromatter";
@@ -19,10 +23,10 @@ interface Props {
 
 const RowWallet: FC<Props> = ({ nr, ticker, averagePrice, quantitySum }) => {
 
-  const filteredDetailsArray: CoinData[] = mockData.filter(item => item.symbol === ticker.toUpperCase());
-  const coinDetails = filteredDetailsArray[0];
+  const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
 
-  ["#", "Coin", "Ticker", "Price", "1h", "24h", "7 days", "Shares", "Profit/Loss"]
+  const filteredDetailsArray: CoinDataInterface[] = coinsData.filter(item => item.ticker === ticker.toUpperCase());
+  const coinDetails = filteredDetailsArray[0];
 
   return (
     <tr className="row text-gray-400 border-b-[1px] border-gray-800">
