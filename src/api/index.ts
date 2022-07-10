@@ -15,6 +15,7 @@ const API = axios.create({
 
 
 export const login = (loginData: LoginData) => API.post<UserInterface>('/auth/login', loginData);
+export const loggedIn = () => API.get<UserInterface>('/auth/loggedin');
 export const signUp = (signUpData: SignUpFormData) => API.post<MyResponse>('/user/register', signUpData);
 
 

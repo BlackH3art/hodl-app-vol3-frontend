@@ -28,7 +28,7 @@ const HodlApp: FC = () => {
       dispatch(setCoinsData(coinsData));
     }
     
-    getData();
+    // getData();
 
   }, []);
 

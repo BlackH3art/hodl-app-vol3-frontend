@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 
 import { Link } from 'react-router-dom';
 import { BsFillPersonFill } from 'react-icons/bs';
@@ -8,10 +8,28 @@ import logo from '../../images/logo-rectangle.png';
 import ButtonPrimary from "../Reusable/ButtonPrimary";
 import ButtonSecondary from "../Reusable/ButtonSecondary";
 import { UserContext } from "../../context/UserContext";
+import { loggedIn } from "../../api";
+import { UserInterface } from "../../interfaces/UserInterface";
 
 const Navigation: FC = () => {
 
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+
+    async function isUserLoggedIn() {
+      try {
+        const { data }: { data: UserInterface } = await loggedIn();
+        setUser(data) ;
+        
+      } catch (error) {
+        setUser(null);
+      }
+    }
+
+    isUserLoggedIn();
+
+  }, []);
 
   return(
     <nav className="w-full h-24 border-b-[1px] border-gray-700 bg-[#0c0c0c35] flex justify-center">

@@ -43,8 +43,6 @@ const LoginForm: FC = () => {
     setLoading(true);
 
     try {
-      const response = await login(loginData)
-      console.log('response -->', response);
       
       const { data: user }: { data: UserInterface } = await login(loginData);
       
