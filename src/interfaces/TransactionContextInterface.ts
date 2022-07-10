@@ -6,10 +6,9 @@ export interface TransactionContextInterface {
   idToEdit: string | null;
   setIdToEdit: Dispatch<SetStateAction<string | null>>;
   transactions: TransactionInterface[];
-  fetchTransactions: () => void;
+  setTransactions: Dispatch<SetStateAction<TransactionInterface[]>>;
   wallet: AverageTransaction[];
-  fetchWallet: () => void;
+  setWallet: Dispatch<SetStateAction<AverageTransaction[]>>;
   history: HistoryItemInterface[];
-  fetchHistory: () => void;
-  fetchAll: () => void;
+  setHistory: Dispatch<SetStateAction<HistoryItemInterface[]>>;
 }

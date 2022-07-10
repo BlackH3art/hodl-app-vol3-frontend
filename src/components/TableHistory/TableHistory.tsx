@@ -1,5 +1,6 @@
 import { FC, useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import { getHistory } from "../../api";
 import { TransactionContext } from "../../context/TransactionContext";
 import { HistoryItemInterface } from "../../interfaces/HistoryItemInterface";
 import HeaderCell from "../Reusable/HeaderCell";
@@ -8,10 +9,17 @@ import RowHistory from "./RowHistory";
 
 const TableHistory: FC = () => {
 
-  const { history, fetchHistory } = useContext(TransactionContext);
+  const { history, setHistory } = useContext(TransactionContext);
   const { ticker } = useParams();
+  const location = useLocation();
 
   useEffect(() => {
+    console.log('location --> ', location);
+    
+    async function fetchHistory() {
+      const { data } = await getHistory();
+      setHistory(data);
+    }
     fetchHistory();
   }, []);
 

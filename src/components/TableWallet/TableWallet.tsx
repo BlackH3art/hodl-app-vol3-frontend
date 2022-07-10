@@ -1,4 +1,6 @@
 import { FC, useContext, useEffect } from "react";
+import { toast } from "react-toastify";
+import { getAverage } from "../../api";
 import { TransactionContext } from "../../context/TransactionContext";
 import { AverageTransaction } from "../../interfaces/TransactionInterface";
 import HeaderCell from "../Reusable/HeaderCell";
@@ -7,10 +9,18 @@ import RowWallet from "./RowWallet";
 
 const TableWallet: FC = () => {
 
-  const { fetchWallet, wallet } = useContext(TransactionContext);
+  const { setWallet, wallet } = useContext(TransactionContext);
 
   useEffect(() => {
 
+    async function fetchWallet() {
+      try {
+        const { data } = await getAverage();
+        setWallet(data);
+      } catch (error) {
+        toast.error("Problem fetching wallet data", { theme: "colored" });
+      }
+    }
     fetchWallet();
     
   }, []);

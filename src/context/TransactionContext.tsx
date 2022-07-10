@@ -10,12 +10,11 @@ export const TransactionContext = createContext<TransactionContextInterface>({
   idToEdit: null,
   setIdToEdit: () => {},
   transactions: [],
-  fetchTransactions: async () => {},
+  setTransactions: () => {},
   wallet: [],
-  fetchWallet: async () => {},
+  setWallet: () => {},
   history: [],
-  fetchHistory: async () => {},
-  fetchAll: () => {},
+  setHistory: () => {},
 });
 
 interface Props {
@@ -32,64 +31,16 @@ const TransactionContextProvider: FC<Props> = ({ children }) => {
 
 
 
-  const fetchTransactions = async () => {
-    try {
-      const { data } = await getTransactions();
-      setTransactions(data);
-      
-    } catch (error: any) {
-      console.log('error fetch transactions');
-      console.log(error.message);
-      toast.error("Couldn't get transactions", { theme: "colored" });
-    }
-  }
-
-  const fetchWallet = async () => {
-    try {
-      const { data } = await getAverage();
-      setWallet(data);
-      
-    } catch (error: any) {
-      console.log('error fetch wallet');
-      console.log(error.message);
-      toast.error("Couldn't get wallet", { theme: "colored" });
-    }
-  }
-
-  const fetchHistory = async () => {
-    try {
-      const { data } = await getHistory();
-      setHistory(data);
-      
-    } catch (error: any) {
-      console.log('error fetch history');
-      console.log(error.message);
-      toast.error("Couldn't get history", { theme: "colored" });
-    }
-  }
-
-
-
-  const fetchAll = () => {
-
-    fetchTransactions();
-    fetchWallet();
-    fetchHistory();
-  }
-
-
-
   return(
     <TransactionContext.Provider value={{
       idToEdit,
       setIdToEdit,
       transactions,
-      fetchTransactions,
+      setTransactions,
       wallet,
-      fetchWallet,
+      setWallet,
       history,
-      fetchHistory,
-      fetchAll,
+      setHistory,
     }}>
       {children}
     </TransactionContext.Provider>

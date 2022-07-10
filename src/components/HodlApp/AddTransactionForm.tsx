@@ -2,7 +2,7 @@ import { ChangeEvent, ChangeEventHandler, Dispatch, FC, FormEvent, FormEventHand
 import { toast } from "react-toastify";
 import { ClipLoader } from 'react-spinners';
 
-import { addTransaction, editTransaction, getCoinData } from "../../api";
+import { addTransaction, editTransaction, getAverage, getCoinData, getHistory, getTransactions } from "../../api";
 import { MyResponse } from "../../interfaces/MyResponse";
 
 import MyErrorInput from "../Reusable/MyErrorInput";
@@ -13,6 +13,7 @@ import { CoinDataInterface } from "../../interfaces/CoinDataInterface";
 import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { addCoinData } from "../../redux/features/coinsData-slice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 export interface TransactionData {
@@ -53,11 +54,13 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
   const [transactionData, setTransactionData] = useState<TransactionData>(initialTransactionData);
   const [error, setError] = useState<FormValidationError>(initialError);
   const [loading, setLoading] = useState<boolean>(false);
-  const { idToEdit, setIdToEdit, transactions } = useContext(TransactionContext);
+  const { idToEdit, setIdToEdit, transactions, setHistory, setTransactions, setWallet } = useContext(TransactionContext);
 
   const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
 
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -110,6 +113,29 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
       }
   
       if(response.ok) {
+
+        switch (location.pathname) {
+          case "/app/hisotry" || "/app/hisotry/*":
+            // fetch history
+            const { data: historyItems } = await getHistory();
+            setHistory(historyItems);
+            break;
+          case "/app/positions":
+            // fetch transactions
+            const { data: transactionItems } = await getTransactions();
+            setTransactions(transactionItems);
+            break;
+          case "/app/wallet":
+            // fetch average
+            const { data: averageItems } = await getAverage();
+            setWallet(averageItems);
+            break;
+        
+          default:
+            navigate('/app/positions', { replace: true });
+            break;
+        }
+
         setLoading(false);
         setIdToEdit(null);
         setTransactionData(initialTransactionData);
@@ -129,6 +155,9 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
       }
 
     } catch (error) {
+      setLoading(false);
+      console.log('error adding --> ', error);
+      
       toast.error("Something went wrong.", { theme: "colored" }); 
     }
   }

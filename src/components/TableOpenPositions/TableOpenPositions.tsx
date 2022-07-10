@@ -1,4 +1,6 @@
 import { Dispatch, FC, SetStateAction, useContext, useEffect } from "react";
+import { toast } from "react-toastify";
+import { getTransactions } from "../../api";
 import { TransactionContext } from "../../context/TransactionContext";
 import { TransactionInterface } from "../../interfaces/TransactionInterface";
 import HeaderCell from "../Reusable/HeaderCell";
@@ -10,9 +12,18 @@ interface Props {
 
 const TableOpenPositions: FC<Props> = ({ showCallback }) => {
 
-  const { transactions, fetchTransactions } = useContext(TransactionContext);
+  const { transactions, setTransactions } = useContext(TransactionContext);
 
   useEffect(() => {
+
+    async function fetchTransactions() {
+      try {
+        const { data } = await getTransactions();
+        setTransactions(data);
+      } catch (error) {
+        toast.error("Problem fetching transactions data", { theme: "colored" });
+      }
+    }
     fetchTransactions();
   }, []);
 
