@@ -54,7 +54,7 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
   const [transactionData, setTransactionData] = useState<TransactionData>(initialTransactionData);
   const [error, setError] = useState<FormValidationError>(initialError);
   const [loading, setLoading] = useState<boolean>(false);
-  const { idToEdit, setIdToEdit, transactions, setHistory, setTransactions, setWallet } = useContext(TransactionContext);
+  const { idToEdit, setIdToEdit, transactions, setHistory, setTransactions, setWallet, setLoadingTable } = useContext(TransactionContext);
 
   const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
 
@@ -92,6 +92,7 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
   const handleSubmit: FormEventHandler = async (e: FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     setLoading(true);
+    setLoadingTable(true);
     try {
 
       let response: MyResponse;
@@ -137,6 +138,7 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
         }
 
         setLoading(false);
+        setLoadingTable(false);
         setIdToEdit(null);
         setTransactionData(initialTransactionData);
         showCallback(false);
@@ -150,12 +152,14 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
 
       } else {
         setLoading(false);
+        setLoadingTable(false);
         toast.error(response.msg, { theme: "colored" }); 
         return;
       }
 
     } catch (error) {
       setLoading(false);
+      setLoadingTable(false);
       console.log('error adding --> ', error);
       
       toast.error("Something went wrong.", { theme: "colored" }); 

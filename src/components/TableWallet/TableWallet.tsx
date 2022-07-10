@@ -1,18 +1,24 @@
-import { FC, useContext, useEffect } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+
 import { getAverage } from "../../api";
 import { TransactionContext } from "../../context/TransactionContext";
 import { AverageTransaction } from "../../interfaces/TransactionInterface";
+
 import HeaderCell from "../Reusable/HeaderCell";
+import LoadingRow from "../Reusable/LoadingRow";
+import NoItemsRow from "../Reusable/NoItemsRow";
 import RowWallet from "./RowWallet";
 
 
 const TableWallet: FC = () => {
 
-  const { setWallet, wallet } = useContext(TransactionContext);
+  const { setWallet, wallet, loadingTable } = useContext(TransactionContext);
+  const [loadingWallet, setLoadingWallet] = useState<boolean>(false);
 
   useEffect(() => {
 
+    setLoadingWallet(true);
     async function fetchWallet() {
       try {
         const { data } = await getAverage();
@@ -21,7 +27,9 @@ const TableWallet: FC = () => {
         toast.error("Problem fetching wallet data", { theme: "colored" });
       }
     }
+
     fetchWallet();
+    setLoadingWallet(false);
     
   }, []);
 
@@ -44,7 +52,16 @@ const TableWallet: FC = () => {
       </thead>
 
       <tbody>
-        {wallet.map((item: AverageTransaction, index: number) => (
+        {loadingWallet || loadingTable ? (
+
+          <LoadingRow length={tableHeaders.length} />
+
+        ) : !wallet.length ? (
+
+          <NoItemsRow length={tableHeaders.length} />
+
+        ) : wallet.map((item: AverageTransaction, index: number) => (
+
           <RowWallet 
             key={index}
             nr={index + 1}

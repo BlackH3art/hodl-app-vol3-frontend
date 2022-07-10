@@ -1,26 +1,39 @@
-import { FC, useContext, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { FC, useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import { getHistory } from "../../api";
 import { TransactionContext } from "../../context/TransactionContext";
 import { HistoryItemInterface } from "../../interfaces/HistoryItemInterface";
+
 import HeaderCell from "../Reusable/HeaderCell";
+import LoadingRow from "../Reusable/LoadingRow";
+import NoItemsRow from "../Reusable/NoItemsRow";
 import RowHistory from "./RowHistory";
 
 
 const TableHistory: FC = () => {
 
-  const { history, setHistory } = useContext(TransactionContext);
+  const { history, setHistory, loadingTable } = useContext(TransactionContext);
+  const [loadingHistory, setLoadingHistory] = useState<boolean>(false);
+
   const { ticker } = useParams();
-  const location = useLocation();
 
   useEffect(() => {
-    console.log('location --> ', location);
-    
+
+    setLoadingHistory(true);
     async function fetchHistory() {
-      const { data } = await getHistory();
-      setHistory(data);
+      try {
+        const { data } = await getHistory();
+        setHistory(data);
+      } catch (error) {
+        toast.error("Problem fetching history data", { theme: "colored" });
+      }
     }
+
     fetchHistory();
+    setLoadingHistory(false);
+
   }, []);
 
   const tableHeaders: string[] = [
@@ -29,7 +42,7 @@ const TableHistory: FC = () => {
 
   const historyItemsArray = history ? (
     ticker ? history.filter(item => item.ticker === ticker) : history
-  ) : (null);
+  ) : ([]);
 
 
   return(
@@ -47,7 +60,9 @@ const TableHistory: FC = () => {
       </thead>
 
       <tbody>
-        {historyItemsArray ? historyItemsArray.map((item: HistoryItemInterface, index: number) => (
+        {loadingHistory || loadingTable ? (
+          <LoadingRow length={tableHeaders.length} />
+        ) : historyItemsArray.length ? historyItemsArray.map((item: HistoryItemInterface, index: number) => (
           <RowHistory 
             nr={index + 1}
             key={index}
@@ -62,7 +77,9 @@ const TableHistory: FC = () => {
             openDate={item.openDate}
             closeDate={item.closeDate}
           />
-        )) : null}
+        )) : (
+          <NoItemsRow length={tableHeaders.length} />
+        )}
       </tbody>
 
     </>

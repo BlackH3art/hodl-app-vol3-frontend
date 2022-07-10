@@ -1,9 +1,13 @@
-import { Dispatch, FC, SetStateAction, useContext, useEffect } from "react";
+import { Dispatch, FC, SetStateAction, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+
 import { getTransactions } from "../../api";
 import { TransactionContext } from "../../context/TransactionContext";
 import { TransactionInterface } from "../../interfaces/TransactionInterface";
+
 import HeaderCell from "../Reusable/HeaderCell";
+import LoadingRow from "../Reusable/LoadingRow";
+import NoItemsRow from "../Reusable/NoItemsRow";
 import RowOpenPositions from "./RowOpenPositions";
 
 interface Props {
@@ -12,10 +16,13 @@ interface Props {
 
 const TableOpenPositions: FC<Props> = ({ showCallback }) => {
 
-  const { transactions, setTransactions } = useContext(TransactionContext);
+  const { transactions, setTransactions, loadingTable } = useContext(TransactionContext);
+  const [loadingTransactions, setLoadingTransactions] = useState<boolean>(false);
+
 
   useEffect(() => {
 
+    setLoadingTransactions(true);
     async function fetchTransactions() {
       try {
         const { data } = await getTransactions();
@@ -24,7 +31,10 @@ const TableOpenPositions: FC<Props> = ({ showCallback }) => {
         toast.error("Problem fetching transactions data", { theme: "colored" });
       }
     }
+
     fetchTransactions();
+    setLoadingTransactions(false);
+
   }, []);
 
   const tableHeaders: string[] = [
@@ -46,7 +56,9 @@ const TableOpenPositions: FC<Props> = ({ showCallback }) => {
       </thead>
 
       <tbody>
-        {transactions ? (
+        {loadingTransactions || loadingTable ? (
+          <LoadingRow length={tableHeaders.length} />
+        ) : transactions.length ? (
           transactions.filter(item => item.open === true).map((item: TransactionInterface, index: number) => (
           <RowOpenPositions 
             id={item._id}
@@ -57,7 +69,9 @@ const TableOpenPositions: FC<Props> = ({ showCallback }) => {
             quantity={item.quantity}
             showCallback={showCallback}
           />
-        ))) : null}
+        ))) : (
+          <NoItemsRow length={tableHeaders.length} />
+        )}
       </tbody>
     </>
   );

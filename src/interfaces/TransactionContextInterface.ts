@@ -11,4 +11,6 @@ export interface TransactionContextInterface {
   setWallet: Dispatch<SetStateAction<AverageTransaction[]>>;
   history: HistoryItemInterface[];
   setHistory: Dispatch<SetStateAction<HistoryItemInterface[]>>;
+  loadingTable: boolean;
+  setLoadingTable: Dispatch<SetStateAction<boolean>>;
 }

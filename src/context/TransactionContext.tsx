@@ -15,6 +15,8 @@ export const TransactionContext = createContext<TransactionContextInterface>({
   setWallet: () => {},
   history: [],
   setHistory: () => {},
+  loadingTable: false,
+  setLoadingTable: () => {},
 });
 
 interface Props {
@@ -28,6 +30,7 @@ const TransactionContextProvider: FC<Props> = ({ children }) => {
   const [transactions, setTransactions] = useState<TransactionInterface[]>([]);
   const [wallet, setWallet] = useState<AverageTransaction[]>([]);
   const [history, setHistory] = useState<HistoryItemInterface[]>([]);
+  const [loadingTable, setLoadingTable] = useState<boolean>(false);
 
 
 
@@ -41,6 +44,8 @@ const TransactionContextProvider: FC<Props> = ({ children }) => {
       setWallet,
       history,
       setHistory,
+      loadingTable,
+      setLoadingTable,
     }}>
       {children}
     </TransactionContext.Provider>

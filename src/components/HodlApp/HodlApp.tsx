@@ -1,6 +1,6 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import TransactionContextProvider, { TransactionContext } from "../../context/TransactionContext";
+import TransactionContextProvider from "../../context/TransactionContext";
 
 import { getCoinsData } from "../../api";
 import { setCoinsData } from "../../redux/features/coinsData-slice";
@@ -16,7 +16,6 @@ import SumbMenu from "./SubMenu";
 const HodlApp: FC = () => {
 
   const [showAddTransaction, setShowTransaction] = useState<boolean>(false);
-  const { fetchAll } = useContext(TransactionContext);
 
   const dispatch = useDispatch();
 
@@ -24,7 +23,6 @@ const HodlApp: FC = () => {
 
     async function getData() {
 
-      fetchAll();
       const { data: coinsData } = await getCoinsData();
       
       dispatch(setCoinsData(coinsData));
