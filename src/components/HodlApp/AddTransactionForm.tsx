@@ -2,12 +2,17 @@ import { ChangeEvent, ChangeEventHandler, Dispatch, FC, FormEvent, FormEventHand
 import { toast } from "react-toastify";
 import { ClipLoader } from 'react-spinners';
 
-import { addTransaction, editTransaction } from "../../api";
+import { addTransaction, editTransaction, getCoinData } from "../../api";
 import { MyResponse } from "../../interfaces/MyResponse";
 
 import MyErrorInput from "../Reusable/MyErrorInput";
 import { TransactionContext } from "../../context/TransactionContext";
 import { UserContext } from "../../context/UserContext";
+import { CoinDataInterface } from "../../interfaces/CoinDataInterface";
+
+import { RootState } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { addCoinData } from "../../redux/features/coinsData-slice";
 
 
 export interface TransactionData {
@@ -48,15 +53,17 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
   const [transactionData, setTransactionData] = useState<TransactionData>(initialTransactionData);
   const [error, setError] = useState<FormValidationError>(initialError);
   const [loading, setLoading] = useState<boolean>(false);
-  const { idToEdit, setIdToEdit } = useContext(TransactionContext);
-  const { user } = useContext(UserContext);
+  const { idToEdit, setIdToEdit, transactions } = useContext(TransactionContext);
 
+  const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
 
-    if(idToEdit && user) {
+    if(idToEdit && transactions) {
 
-      const transactionToEdit = user.transactions.filter(item => item._id === idToEdit);
+      const transactionToEdit = transactions.filter(item => item._id === idToEdit);
       const { ticker, quantity, entryPrice, openDate, type } = transactionToEdit[0];
 
       setTransactionData({
@@ -85,6 +92,11 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
     try {
 
       let response: MyResponse;
+
+      const { data: coinData }: { data: CoinDataInterface } = await getCoinData(transactionData.ticker);
+      if(!coinsData.find(item => item.ticker === coinData.ticker)) {
+        dispatch(addCoinData(coinData));
+      }
 
       if(idToEdit) {
         const { data }: { data: MyResponse } = await editTransaction(idToEdit, transactionData);

@@ -29,3 +29,4 @@ export const editTransaction = (transactionID: string, editedTransaction: Transa
 
 
 export const getCoinsData = () => API.get<CoinDataInterface[]>('/fetch/coins');
+export const getCoinData = (ticker: string) => API.get<CoinDataInterface>(`/fetch/coin/${ticker}`);
