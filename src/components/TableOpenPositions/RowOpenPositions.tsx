@@ -13,6 +13,7 @@ import DoubleRowCell from "../Reusable/DoubleRowCell";
 import PercentCell from "../Reusable/PercentCell";
 import SellFormCell from "../Reusable/SellFormCell";
 import TableCell from "../Reusable/TableCell";
+import LoadingRow from "../Reusable/LoadingRow";
 
 interface Props {
   id: string;
@@ -30,7 +31,9 @@ const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity, id, sho
   const filteredDetailsArray: CoinDataInterface[] = coinsData.filter(item => item.ticker === ticker.toUpperCase());
   const coinDetails = filteredDetailsArray[0];
 
-  return(
+  return !coinDetails ? (
+    <LoadingRow length={8} />
+  ) : (
     <tr className="row text-gray-400 border-b-[1px] border-gray-800">
 
       <TableCell>

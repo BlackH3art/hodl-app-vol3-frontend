@@ -49,7 +49,7 @@ const LoginForm: FC = () => {
       setUser(user);
       setLoading(false);
 
-      navigate('/app', { replace: true });
+      navigate('/app/positions', { replace: true });
     } catch (error: any) {
       toast.error("Something went wrong!", { theme: "colored" }); 
       setLoading(false);
@@ -58,7 +58,7 @@ const LoginForm: FC = () => {
   }
 
   return (
-    <section className="w-full flex justify-center items-center min-h-[80vh] border-b-2">
+    <section className="w-full flex justify-center items-center min-h-[80vh]">
 
       <div className="glass1 border-[1px] border-gray-500 p-10 text-white flex flex-col items-center">
 

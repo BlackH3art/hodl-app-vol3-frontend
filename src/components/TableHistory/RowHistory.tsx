@@ -12,6 +12,7 @@ import ColorValue from "../Reusable/ColorValue";
 import CryptoFormatter from "../Reusable/CryptoFromatter";
 import DoubleROwHistoryCell from "../Reusable/DoubleRowHistoryCell";
 import TableCell from "../Reusable/TableCell";
+import LoadingRow from "../Reusable/LoadingRow";
 
 
 interface Props {
@@ -35,7 +36,9 @@ const RowHistory: FC<Props> = ({ nr, ticker, type, sellingPrice, entryPrice, qua
   const filteredDetailsArray: CoinDataInterface[] = coinsData.filter(item => item.ticker === ticker.toUpperCase());
   const coinDetails = filteredDetailsArray[0];
 
-  return(
+  return !coinDetails ? (
+    <LoadingRow length={8} />
+  ) : (
     <tr className="row text-gray-400 border-b-[1px] border-gray-800">
 
       <TableCell>

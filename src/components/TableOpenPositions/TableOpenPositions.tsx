@@ -1,9 +1,13 @@
 import { Dispatch, FC, SetStateAction, useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { getTransactions } from "../../api";
+import { getCoinsData, getTransactions } from "../../api";
 import { TransactionContext } from "../../context/TransactionContext";
+import { CoinDataInterface } from "../../interfaces/CoinDataInterface";
 import { TransactionInterface } from "../../interfaces/TransactionInterface";
+import { setCoinsData } from "../../redux/features/coinsData-slice";
+import { RootState } from "../../redux/store";
 
 import HeaderCell from "../Reusable/HeaderCell";
 import LoadingRow from "../Reusable/LoadingRow";
@@ -18,7 +22,23 @@ const TableOpenPositions: FC<Props> = ({ showCallback }) => {
 
   const { transactions, setTransactions, loadingTable } = useContext(TransactionContext);
   const [loadingTransactions, setLoadingTransactions] = useState<boolean>(false);
+  
+  const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    async function getData() {
+      const { data: coinsData } = await getCoinsData();
+      dispatch(setCoinsData(coinsData));
+    }
+    
+    if(coinsData.length === 0) {
+      getData();
+    }
+
+  }, []);
 
   useEffect(() => {
 

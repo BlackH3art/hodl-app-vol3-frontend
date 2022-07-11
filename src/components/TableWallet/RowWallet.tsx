@@ -12,6 +12,7 @@ import CryptoFormatter from "../Reusable/CryptoFromatter";
 import DoubleRowCell from "../Reusable/DoubleRowCell";
 import PercentCell from "../Reusable/PercentCell";
 import TableCell from "../Reusable/TableCell";
+import LoadingRow from "../Reusable/LoadingRow";
 
 interface Props {
   ticker: string;
@@ -28,7 +29,9 @@ const RowWallet: FC<Props> = ({ nr, ticker, averagePrice, quantitySum }) => {
   const filteredDetailsArray: CoinDataInterface[] = coinsData.filter(item => item.ticker === ticker.toUpperCase());
   const coinDetails = filteredDetailsArray[0];
 
-  return (
+  return !coinDetails ? (
+    <LoadingRow length={9} />
+  ) : (
     <tr className="row text-gray-400 border-b-[1px] border-gray-800">
 
       <TableCell>

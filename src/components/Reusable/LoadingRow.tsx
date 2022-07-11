@@ -23,9 +23,9 @@ const LoadingRow: FC<Props> = ({ length }) => {
       </td>
 
       {items.map(item => (
-        <td className="py-6" key={item}>
+        <td className="py-5" key={item}>
           <div className="flex justify-center">
-            <ClipLoader color="#3b3b3b"/>
+            <ClipLoader color="#797979"/>
           </div>
         </td>
       ))}

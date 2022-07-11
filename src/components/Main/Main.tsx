@@ -24,7 +24,7 @@ const Main: FC = () => {
           </h1>
 
           {user ? (
-            <Link to="/app" className="hidden md:inline w-4/5 lg:w-1/2 pt-10">
+            <Link to="/app/positions" className="hidden md:inline w-4/5 lg:w-1/2 pt-10">
               <ButtonPrimary>
                 <p className="uppercase font-bold">
                   app

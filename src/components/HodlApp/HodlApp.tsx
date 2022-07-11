@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import TransactionContextProvider from "../../context/TransactionContext";
 
 import { getCoinsData } from "../../api";
@@ -18,20 +18,6 @@ const HodlApp: FC = () => {
 
   const [showAddTransaction, setShowTransaction] = useState<boolean>(false);
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-
-    async function getData() {
-
-      const { data: coinsData } = await getCoinsData();
-      
-      dispatch(setCoinsData(coinsData));
-    }
-    
-    getData();
-
-  }, []);
 
   return(
     <TransactionContextProvider>
@@ -50,6 +36,8 @@ const HodlApp: FC = () => {
               <Route path="wallet" element={ <TableWallet />} />
               <Route path="history" element={ <TableHistory />} />
               <Route path="history/:ticker" element={ <TableHistory />} />
+
+              <Route path="*" element={ <Navigate to="positions" />} />
 
             </Routes>
           </table>

@@ -1,10 +1,14 @@
 import { FC, useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { getHistory } from "../../api";
+import { getCoinsData, getHistory } from "../../api";
 import { TransactionContext } from "../../context/TransactionContext";
+import { CoinDataInterface } from "../../interfaces/CoinDataInterface";
 import { HistoryItemInterface } from "../../interfaces/HistoryItemInterface";
+import { setCoinsData } from "../../redux/features/coinsData-slice";
+import { RootState } from "../../redux/store";
 
 import HeaderCell from "../Reusable/HeaderCell";
 import LoadingRow from "../Reusable/LoadingRow";
@@ -18,6 +22,23 @@ const TableHistory: FC = () => {
   const [loadingHistory, setLoadingHistory] = useState<boolean>(false);
 
   const { ticker } = useParams();
+
+  const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    async function getData() {
+      const { data: coinsData } = await getCoinsData();
+      dispatch(setCoinsData(coinsData));
+    }
+    
+    if(coinsData.length === 0) {
+      getData();
+    }
+
+  }, []);
 
   useEffect(() => {
 

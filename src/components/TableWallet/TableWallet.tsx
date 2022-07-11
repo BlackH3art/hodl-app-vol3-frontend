@@ -1,9 +1,13 @@
 import { FC, useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { getAverage } from "../../api";
+import { getAverage, getCoinsData } from "../../api";
 import { TransactionContext } from "../../context/TransactionContext";
+import { CoinDataInterface } from "../../interfaces/CoinDataInterface";
 import { AverageTransaction } from "../../interfaces/TransactionInterface";
+import { setCoinsData } from "../../redux/features/coinsData-slice";
+import { RootState } from "../../redux/store";
 
 import HeaderCell from "../Reusable/HeaderCell";
 import LoadingRow from "../Reusable/LoadingRow";
@@ -15,6 +19,23 @@ const TableWallet: FC = () => {
 
   const { setWallet, wallet, loadingTable } = useContext(TransactionContext);
   const [loadingWallet, setLoadingWallet] = useState<boolean>(false);
+
+  const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    async function getData() {
+      const { data: coinsData } = await getCoinsData();
+      dispatch(setCoinsData(coinsData));
+    }
+    
+    if(coinsData.length === 0) {
+      getData();
+    }
+
+  }, []);
 
   useEffect(() => {
 
