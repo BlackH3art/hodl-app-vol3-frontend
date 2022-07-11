@@ -10,6 +10,7 @@ import ButtonSecondary from "../Reusable/ButtonSecondary";
 import { UserContext } from "../../context/UserContext";
 import { loggedIn } from "../../api";
 import { UserInterface } from "../../interfaces/UserInterface";
+import { shortenEmail } from "../../helpers/shortenEmail";
 
 const Navigation: FC = () => {
 
@@ -33,10 +34,10 @@ const Navigation: FC = () => {
 
   return(
     <nav className="w-full h-24 border-b-[1px] border-gray-700 bg-[#0c0c0c35] flex justify-center">
-      <div className="w-4/5 flex items-center justify-between">
+      <div className="w-full lg:w-4/5 flex items-center justify-between">
 
         <Link to="/">
-          <img className="h-20" src={logo} alt="hoDl!"/>
+          <img className="w-24 pl-2 lg:pl-0 md:h-20 md:w-auto" src={logo} alt="hoDl!"/>
         </Link>
 
 
@@ -48,8 +49,12 @@ const Navigation: FC = () => {
                 <BsFillPersonFill color="white" size="1.5rem" />
               </div>
 
-              <p className="text-sm ">
+              <p className="hidden md:inline text-sm">
                 {user.email}
+              </p>
+
+              <p className="md:hidden text-sm">
+                {shortenEmail(user.email)}
               </p>
             </>
           )}
