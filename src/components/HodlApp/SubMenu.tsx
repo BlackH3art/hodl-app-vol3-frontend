@@ -11,7 +11,7 @@ interface Props {
 const SumbMenu: FC<Props> = ({ showCallback }) => {
 
   return(
-    <div className="w-full xl:w-3/4 h-14 border-b-[1px] border-gray-800 text-gray-300 flex justify-between">
+    <div className="w-full xl:w-3/4 h-14 border-b-[1px] border-gray-800 text-gray-300 flex justify-between mt-10">
 
       <div className="flex">
         <Link className="ml-2" to="/app/positions">

@@ -5,7 +5,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        main: "#131722"
+        main: "#131722",
+        myBlue: "#00c2f3",
+        myAqua: "#11998e",
+        myGreen: "#38ef7d",
       }
     },
   },

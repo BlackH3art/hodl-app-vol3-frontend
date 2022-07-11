@@ -29,7 +29,7 @@ const HodlApp: FC = () => {
       dispatch(setCoinsData(coinsData));
     }
     
-    // getData();
+    getData();
 
   }, []);
 
@@ -43,7 +43,7 @@ const HodlApp: FC = () => {
 
 
         <div className="table-wraper w-full xl:w-3/4">
-          <table className="w-full bg-gray-900" cellPadding="0" cellSpacing="0">
+          <table className="w-full glass1" cellPadding="0" cellSpacing="0">
             <Routes>
 
               <Route path="positions" element={ <TableOpenPositions showCallback={setShowTransaction} />} />

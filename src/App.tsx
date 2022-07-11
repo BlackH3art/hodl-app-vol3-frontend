@@ -8,6 +8,7 @@ import SignUpForm from './components/SignUpForm/SignUpForm';
 import LoginForm from './components/LoginForm/LoginForm';
 import HodlApp from './components/HodlApp/HodlApp';
 import Footer from './components/Footer/Footer';
+import Main from './components/Main/Main';
 
 function App() {
 
@@ -19,8 +20,10 @@ function App() {
 
         <Navigation />
 
+        
+
         <Routes>
-          <Route path="/" element={<div />} />
+          <Route path="/" element={<Main />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signUp" element={<SignUpForm />} />
           <Route path="/app/*" element={<HodlApp />} />
