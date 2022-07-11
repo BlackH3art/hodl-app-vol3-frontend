@@ -11,6 +11,7 @@ import TableOpenPositions from "../TableOpenPositions/TableOpenPositions";
 import TableWallet from "../TableWallet/TableWallet";
 import AddTransactionForm from "./AddTransactionForm";
 import SumbMenu from "./SubMenu";
+import AddButton from "../Reusable/AddButton";
 
 
 const HodlApp: FC = () => {
@@ -34,7 +35,7 @@ const HodlApp: FC = () => {
 
   return(
     <TransactionContextProvider>
-      <section className="relative w-full flex flex-col justify-center items-center min-h-[80vh]">
+      <section className="relative w-full flex flex-col items-center min-h-[80vh]">
 
         <SumbMenu showCallback={setShowTransaction} />
 
@@ -52,6 +53,11 @@ const HodlApp: FC = () => {
 
             </Routes>
           </table>
+        </div>
+
+
+        <div className="absolute bottom-5 right-2 flex items-center justify-center">
+          <AddButton showCallback={setShowTransaction} />
         </div>
         
       </section>

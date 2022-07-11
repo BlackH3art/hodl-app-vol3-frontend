@@ -1,5 +1,7 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import { Link } from "react-router-dom";
+import { BsClockHistory } from 'react-icons/bs';
+
 import ButtonSecondary from "../Reusable/ButtonSecondary";
 
 interface Props {
@@ -25,7 +27,7 @@ const SumbMenu: FC<Props> = ({ showCallback }) => {
         </Link>
       </div>
 
-      <div className="flex">
+      <div className="hidden md:flex">
           <div className="mr-2">
             <ButtonSecondary handler={() => showCallback(true)}>
               <p className="px-5">Add transaction</p>
@@ -38,6 +40,18 @@ const SumbMenu: FC<Props> = ({ showCallback }) => {
               </ButtonSecondary>
             </Link>
           </div>
+      </div>
+
+      <div className="flex md:hidden">
+        <div className="mr-2">
+          <Link to="/app/history">
+            <ButtonSecondary>
+              <p className="px-3">
+                <BsClockHistory size="1.5rem"  />
+              </p>
+            </ButtonSecondary>
+          </Link>
+        </div>
       </div>
 
     </div>
