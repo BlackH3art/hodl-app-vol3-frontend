@@ -7,19 +7,19 @@ import Navigation from './components/Navigation/Navigation';
 import SignUpForm from './components/SignUpForm/SignUpForm';
 import LoginForm from './components/LoginForm/LoginForm';
 import HodlApp from './components/HodlApp/HodlApp';
+import Footer from './components/Footer/Footer';
 
 function App() {
 
   return (
     <Router>
-      <div className="app w-full min-h-[100vh] bg-main">
+      <div className="app w-full min-h-[95vh] bg-main">
 
         <ToastContainer />
 
         <Navigation />
 
         <Routes>
-
           <Route path="/" element={<div />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signUp" element={<SignUpForm />} />
@@ -27,12 +27,11 @@ function App() {
 
 
           <Route path="*" element={ <Navigate to="/" /> } />
-
         </Routes>
 
-
-
       </div>
+
+      <Footer />
     </Router>
   )
 }

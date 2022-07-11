@@ -56,7 +56,7 @@ const HodlApp: FC = () => {
         </div>
 
 
-        <div className="absolute bottom-5 right-2 flex items-center justify-center">
+        <div className="absolute md:hidden bottom-5 right-2 flex items-center justify-center">
           <AddButton showCallback={setShowTransaction} />
         </div>
         
