@@ -10,7 +10,7 @@ const Main: FC = () => {
 
   return(
     <section className="w-full flex items-center justify-center text-white">
-      <main className="w-full lg:w-4/5 xl:w-3/5 flex flex-col md:flex-row ">
+      <main className="w-full lg:w-4/5 xl:w-4/5 2xl:w-3/5 flex flex-col md:flex-row ">
 
         <div className="flex flex-col py-10 md:py-48 pl-10 lg:pl-0">
           <h1 className="pl-14 md:pl-0 text-4xl md:text-5xl lg:text-6xl font-bold">

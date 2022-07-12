@@ -91,7 +91,7 @@ const Navigation: FC = () => {
               </ButtonSecondary>
             </div>
           ) : (
-            <Link to="/login">
+            <Link className="mr-2" to="/login">
               <ButtonPrimary title="Login" />
             </Link>
           )}
