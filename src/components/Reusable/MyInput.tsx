@@ -21,6 +21,7 @@ const MyInput: FC<Props> = ({name, type, placeholder, error, value, handler}) =>
         value={value}
         onChange={handler}
         autoComplete="off"
+        min={0}
       />
     </label>
   )

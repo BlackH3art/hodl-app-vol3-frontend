@@ -78,7 +78,7 @@ const TableOpenPositions: FC<Props> = ({ showCallback }) => {
       <tbody>
         {loadingTransactions || loadingTable ? (
           <LoadingRow length={tableHeaders.length} />
-        ) : transactions.length ? (
+        ) : transactions.filter(item => item.open === true).length ? (
           transactions.filter(item => item.open === true).map((item: TransactionInterface, index: number) => (
           <RowOpenPositions 
             id={item._id}

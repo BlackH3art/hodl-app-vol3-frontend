@@ -46,19 +46,19 @@ const ActionCell: FC<Props> = ({ id, ticker, showCallback }) => {
     <div className="flex justify-center">
       <div className="mx-1">
         <button onClick={handleEdit}>
-          <AiOutlineEdit />
+          <AiOutlineEdit size="1.1rem" />
         </button>
       </div>
 
       <div className="mx-1">
         <button onClick={() => navigate(`../history/${ticker}`)}>
-          <FaHistory />
+          <FaHistory size="1.1rem" />
         </button>
       </div>
 
       <div className="mx-1">
         <button onClick={handleDelete}>
-          <AiTwotoneDelete />
+          <AiTwotoneDelete size="1.1rem" />
         </button>
       </div>
     </div>

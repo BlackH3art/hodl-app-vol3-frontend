@@ -23,6 +23,8 @@ export const logout = () => API.get<MyResponse>('/auth/logout');
 export const getTransactions = () => API.get<TransactionInterface[]>('/transaction/all');
 export const getAverage = () => API.get<AverageTransaction[]>('/transaction/average');
 export const getHistory = () => API.get<HistoryItemInterface[]>('/transaction/history');
+export const getMaxTransactionAmount = (transactionID: string) => API.get<MyResponse>(`/transaction/max/id/${transactionID}`);
+export const getMaxTickerAmount = (ticker: string) => API.get<MyResponse>(`/transaction/max/ticker/${ticker}`);
 
 
 export const addTransaction = (transactionData: TransactionData) => API.post<MyResponse>('/transaction/add', transactionData );

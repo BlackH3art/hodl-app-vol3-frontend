@@ -14,6 +14,7 @@ import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { addCoinData } from "../../redux/features/coinsData-slice";
 import { useLocation, useNavigate } from "react-router-dom";
+import MySellInput from "../Reusable/MySellInput";
 
 
 export interface TransactionData {
@@ -159,6 +160,7 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
 
         setLoading(false);
         setLoadingTable(false);
+        setIdToSell(null);
         setIdToEdit(null);
         setTransactionData(initialTransactionData);
         showCallback(false);
@@ -187,6 +189,7 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
   }
 
   const handleCancel = () => {
+    setIdToSell(null);
     setIdToEdit(null);
     showCallback(false);
   }
@@ -195,6 +198,13 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
     setIdToEdit(null);
     setIdToSell(null);
     setTransactionData({ ...initialTransactionData, type: type});
+  }
+
+  const handleSetAll = (amount: number) => {
+    setTransactionData({
+      ...transactionData,
+      quantity: amount
+    });
   }
 
 
@@ -222,14 +232,27 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
             value={transactionData.ticker}
           />
 
-          <MyErrorInput 
-            name="quantity"
-            type="number"
-            placeholder="Amount"
-            error={error.amount}
-            handler={handleChange}
-            value={transactionData.quantity}
-          />
+          {transactionData.type === "buy" ? (
+            <MyErrorInput 
+              name="quantity"
+              type="number"
+              placeholder="Amount"
+              error={error.amount}
+              handler={handleChange}
+              value={transactionData.quantity}
+            />
+          ) : (
+            <MySellInput  
+              name="quantity"
+              type="number"
+              placeholder="Amount"
+              error={error.amount}
+              handler={handleChange}
+              value={transactionData.quantity}
+              ticker={transactionData.ticker}
+              setAllCallback={handleSetAll}
+            />
+          )}
 
           <MyErrorInput 
             name="price"

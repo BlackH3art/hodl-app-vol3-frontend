@@ -13,7 +13,7 @@ interface Props {
 const MyErrorInput: FC<Props> = ({ name, type, placeholder, value, error, handler }) => {
 
   return(
-    <div className="">
+    <div className="w-3/5">
       <label className={`${error ? 'error-input' : ''} my-label flex items-center px-5 py-4 mt-4`}>
         <input 
           name={name} 
