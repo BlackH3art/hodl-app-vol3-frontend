@@ -11,9 +11,9 @@ import ColorValue from "../Reusable/ColorValue";
 import CryptoFormatter from "../Reusable/CryptoFromatter";
 import DoubleRowCell from "../Reusable/DoubleRowCell";
 import PercentCell from "../Reusable/PercentCell";
-import SellFormCell from "../Reusable/SellFormCell";
 import TableCell from "../Reusable/TableCell";
 import LoadingRow from "../Reusable/LoadingRow";
+import SellButtonCell from "../Reusable/SellButtonCell";
 
 interface Props {
   id: string;
@@ -86,7 +86,10 @@ const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity, id, sho
       </TableCell>
 
       <TableCell>
-        <SellFormCell />
+        <SellButtonCell 
+          showCallback={showCallback} 
+          id={id}
+        />
       </TableCell>
 
       <TableCell>

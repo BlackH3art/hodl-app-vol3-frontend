@@ -9,6 +9,8 @@ import { AverageTransaction, TransactionInterface } from "../interfaces/Transact
 export const TransactionContext = createContext<TransactionContextInterface>({
   idToEdit: null,
   setIdToEdit: () => {},
+  idToSell: null,
+  setIdToSell: () => {},
   transactions: [],
   setTransactions: () => {},
   wallet: [],
@@ -26,6 +28,7 @@ interface Props {
 const TransactionContextProvider: FC<Props> = ({ children }) => {
 
   const [idToEdit, setIdToEdit] = useState<string | null>(null);
+  const [idToSell, setIdToSell] = useState<string | null>(null);
 
   const [transactions, setTransactions] = useState<TransactionInterface[]>([]);
   const [wallet, setWallet] = useState<AverageTransaction[]>([]);
@@ -38,6 +41,8 @@ const TransactionContextProvider: FC<Props> = ({ children }) => {
     <TransactionContext.Provider value={{
       idToEdit,
       setIdToEdit,
+      idToSell,
+      setIdToSell,
       transactions,
       setTransactions,
       wallet,

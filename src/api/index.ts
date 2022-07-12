@@ -28,6 +28,7 @@ export const getHistory = () => API.get<HistoryItemInterface[]>('/transaction/hi
 export const addTransaction = (transactionData: TransactionData) => API.post<MyResponse>('/transaction/add', transactionData );
 export const deleteTransaction = (transactionID: string) => API.delete<MyResponse>(`/transaction/delete/${transactionID}`);
 export const editTransaction = (transactionID: string, editedTransaction: TransactionData) => API.patch<MyResponse>(`/transaction/edit/${transactionID}`, editedTransaction);
+export const sellTransaction = (transactionID: string, sellTransaction: TransactionData) => API.patch<MyResponse>(`/transaction/sell/${transactionID}`, sellTransaction);
 
 
 export const getCoinsData = () => API.get<CoinDataInterface[]>('/fetch/coins');

@@ -137,9 +137,15 @@ code {
   color: #797979;
 }
 
-.btn-navlink {
+.btn-navlink, .btn-sell {
   outline: 1px solid #4b5563;
   transition: .2s;
+}
+
+.btn-sell:hover {
+  outline: 1px solid #dd4848;
+  color: #fff;
+  background-color: #dd4848;
 }
 
 .btn-navlink-active {

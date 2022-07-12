@@ -2,7 +2,7 @@ import { ChangeEvent, ChangeEventHandler, Dispatch, FC, FormEvent, FormEventHand
 import { toast } from "react-toastify";
 import { ClipLoader } from 'react-spinners';
 
-import { addTransaction, editTransaction, getAverage, getCoinData, getHistory, getTransactions } from "../../api";
+import { addTransaction, editTransaction, getAverage, getCoinData, getHistory, getTransactions, sellTransaction } from "../../api";
 import { MyResponse } from "../../interfaces/MyResponse";
 
 import MyErrorInput from "../Reusable/MyErrorInput";
@@ -54,7 +54,7 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
   const [transactionData, setTransactionData] = useState<TransactionData>(initialTransactionData);
   const [error, setError] = useState<FormValidationError>(initialError);
   const [loading, setLoading] = useState<boolean>(false);
-  const { idToEdit, setIdToEdit, transactions, setHistory, setTransactions, setWallet, setLoadingTable } = useContext(TransactionContext);
+  const { idToEdit, setIdToEdit, idToSell, setIdToSell, transactions, setHistory, setTransactions, setWallet, setLoadingTable } = useContext(TransactionContext);
 
   const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
 
@@ -74,6 +74,21 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
         quantity: quantity,
         price: entryPrice,
         type: type,
+        date: openDate
+      });
+    }
+
+
+    if(idToSell && transactions) {
+
+      const transactionToSell = transactions.filter(item => item._id === idToSell);
+      const { ticker, openDate } = transactionToSell[0];
+
+      setTransactionData({
+        ticker: ticker,
+        quantity: "",
+        price: "",
+        type: "sell",
         date: openDate
       });
     }
@@ -105,6 +120,11 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
       if(idToEdit) {
         const { data }: { data: MyResponse } = await editTransaction(idToEdit, transactionData);
         response = data;
+
+      } else if(idToSell) {
+        const { data }: { data: MyResponse } = await sellTransaction(idToSell, transactionData)
+        response = data;
+
       } else {
         const { data }: { data: MyResponse} = await addTransaction({
           ...transactionData,
@@ -171,6 +191,12 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
     showCallback(false);
   }
 
+  const handleChangeType = (type: "buy" | "sell") => {
+    setIdToEdit(null);
+    setIdToSell(null);
+    setTransactionData({ ...initialTransactionData, type: type});
+  }
+
 
   return (
     <div className="glass2 absolute w-full h-screen flex items-center justify-center z-10">
@@ -179,10 +205,10 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
         <form className="w-full flex flex-col items-center text-white pb-16">
 
           <div className={`w-full flex font-bold border-[1px] border-gray-700 ${transactionData.type === "buy" ? "bg-green-500" : "bg-red-400"}`}>
-            <button type="button" className={`w-1/2 py-5 px-5 rounded-br-[2rem] ${transactionData.type === "buy" ? "bg-transparent font-semibold" : "bg-[#131722] font-light text-gray-400"}`} onClick={() => setTransactionData({ ...initialTransactionData, type: "buy"})}>
+            <button type="button" className={`w-1/2 py-5 px-5 rounded-br-[2rem] ${transactionData.type === "buy" ? "bg-transparent font-semibold" : "bg-[#131722] font-light text-gray-400"}`} onClick={() => handleChangeType("buy")}>
               buy
             </button>
-            <button type="button" className={`w-1/2 py-5 px-5 rounded-bl-[2rem] ${transactionData.type !== "buy" ? "bg-transparent font-semibold" : "bg-[#131722] font-light text-gray-400"}`} onClick={() => setTransactionData({ ...initialTransactionData, type: "sell"})}>
+            <button type="button" className={`w-1/2 py-5 px-5 rounded-bl-[2rem] ${transactionData.type !== "buy" ? "bg-transparent font-semibold" : "bg-[#131722] font-light text-gray-400"}`} onClick={() => handleChangeType("sell")}>
               sell
             </button>
           </div>

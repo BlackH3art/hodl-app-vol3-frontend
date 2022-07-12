@@ -5,6 +5,8 @@ import { AverageTransaction, TransactionInterface } from "./TransactionInterface
 export interface TransactionContextInterface {
   idToEdit: string | null;
   setIdToEdit: Dispatch<SetStateAction<string | null>>;
+  idToSell: string | null;
+  setIdToSell: Dispatch<SetStateAction<string | null>>;
   transactions: TransactionInterface[];
   setTransactions: Dispatch<SetStateAction<TransactionInterface[]>>;
   wallet: AverageTransaction[];
