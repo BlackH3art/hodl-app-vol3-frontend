@@ -1,20 +1,28 @@
 import { FC, useContext, useEffect, useState } from "react";
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { FiLogOut } from 'react-icons/fi';
+import { toast } from "react-toastify";
+import { ClipLoader } from 'react-spinners';
 
+import { loggedIn, logout } from "../../api";
+import { UserContext } from "../../context/UserContext";
+import { UserInterface } from "../../interfaces/UserInterface";
+import { MyResponse } from "../../interfaces/MyResponse";
+import { shortenEmail } from "../../helpers/shortenEmail";
 import logo from '../../images/logo-rectangle.png';
+
 import ButtonPrimary from "../Reusable/ButtonPrimary";
 import ButtonSecondary from "../Reusable/ButtonSecondary";
-import { UserContext } from "../../context/UserContext";
-import { loggedIn } from "../../api";
-import { UserInterface } from "../../interfaces/UserInterface";
-import { shortenEmail } from "../../helpers/shortenEmail";
+
 
 const Navigation: FC = () => {
 
   const { user, setUser } = useContext(UserContext);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -31,6 +39,23 @@ const Navigation: FC = () => {
     isUserLoggedIn();
 
   }, []);
+
+
+  const logoutUser = async () => {
+    setLoading(true);
+    try {
+      const { data }: { data: MyResponse} = await logout();
+      if(data.ok) {
+        setUser(null);
+        navigate('/', { replace: true });
+        setLoading(false);
+      }
+
+    } catch (error) {
+      setLoading(false);
+      toast.error("Problem logging out", { theme: "colored" });
+    }
+  }
 
   return(
     <nav className="w-full h-24 border-b-[1px] border-gray-700 bg-[#0c0c0c35] flex justify-center">
@@ -61,8 +86,8 @@ const Navigation: FC = () => {
 
           {user ? (
             <div className="w-12 mx-2">
-              <ButtonSecondary>
-                <FiLogOut color="white" size="1rem" />
+              <ButtonSecondary handler={logoutUser}>
+                {loading ? <ClipLoader color="white" size="1rem" /> : <FiLogOut color="white" size="1rem" />}
               </ButtonSecondary>
             </div>
           ) : (

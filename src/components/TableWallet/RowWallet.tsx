@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { mockData } from "../../helpers/mockData";
 import { usdFormatter } from "../../helpers/usdFormatter";
 import { CoinDataInterface } from "../../interfaces/CoinDataInterface";
 
