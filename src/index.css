@@ -136,3 +136,20 @@ code {
 .asd{
   color: #797979;
 }
+
+.btn-navlink {
+  outline: 1px solid #4b5563;
+  transition: .2s;
+}
+
+.btn-navlink-active {
+  outline: 1px solid var(--blue);
+  transition: .2s;
+  -webkit-box-shadow: 0px 0px 10px 0px #2ad4ff;
+  -moz-box-shadow: 0px 0px 10px 0px #2ad4ff;
+  box-shadow: 0px 0px 10px 0px #2ad4ff;
+}
+
+.btn-navlink:hover, .btn-navlink-active:hover, .btn-secondary:hover {
+  background-color: #adadad11;
+}
