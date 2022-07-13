@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCoinData } from "../../redux/features/coinsData-slice";
 import { useLocation, useNavigate } from "react-router-dom";
 import MySellInput from "../Reusable/MySellInput";
+import { validateAddTransaction } from "../../helpers/validateAddTransaction";
 
 
 export interface TransactionData {
@@ -33,16 +34,16 @@ const initialTransactionData: TransactionData = {
   date: null
 }
 
-interface FormValidationError {
+export interface FormValidationError {
   ticker: string;
   amount: string;
-  entryPrice: string;
+  price: string;
 }
 
 const initialError: FormValidationError = {
   ticker: "",
   amount: "",
-  entryPrice: "",
+  price: "",
 }
 
 interface Props {
@@ -109,8 +110,20 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
     e.preventDefault();
     setLoading(true);
     setLoadingTable(true);
-    try {
 
+    setError(validateAddTransaction(transactionData));
+
+    const isError = validateAddTransaction(transactionData);
+    setError(isError);
+
+    if(isError.ticker || isError.amount || isError.price) {
+
+      setLoading(false);
+      setLoadingTable(false);
+      return;
+    }
+
+    try {
       let response: MyResponse;
 
       const { data: coinData }: { data: CoinDataInterface } = await getCoinData(transactionData.ticker);
@@ -162,6 +175,7 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
         setLoadingTable(false);
         setIdToSell(null);
         setIdToEdit(null);
+        setError(initialError);
         setTransactionData(initialTransactionData);
         showCallback(false);
         
@@ -179,22 +193,32 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
         return;
       }
 
-    } catch (error) {
+    } catch (err: any) {
       setLoading(false);
       setLoadingTable(false);
-      console.log('error adding --> ', error);
+
+      if(err.response.data.msg === "Coin not found") {
+        setError({
+          ...error,
+          ticker: "Coin not found"
+        });
+      } else {
+        toast.error("Something went wrong.", { theme: "colored" }); 
+      }
       
-      toast.error("Something went wrong.", { theme: "colored" }); 
     }
+    
   }
 
   const handleCancel = () => {
+    setError(initialError);
     setIdToSell(null);
     setIdToEdit(null);
     showCallback(false);
   }
 
   const handleChangeType = (type: "buy" | "sell") => {
+    setError(initialError);
     setIdToEdit(null);
     setIdToSell(null);
     setTransactionData({ ...initialTransactionData, type: type});
@@ -205,6 +229,10 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
       ...transactionData,
       quantity: amount
     });
+    setError({
+      ...error,
+      amount: ""
+    })
   }
 
 
@@ -258,7 +286,7 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
             name="price"
             type="number"
             placeholder="Price"
-            error={error.entryPrice}
+            error={error.price}
             handler={handleChange}
             value={transactionData.price}
           />

@@ -20,13 +20,13 @@ interface Props {
 const MySellInput: FC<Props> = ({name, type, placeholder, error, value, handler, ticker, setAllCallback }) => {
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [insideError, setInsideError] = useState<string>('');
   const { idToSell } = useContext(TransactionContext);
 
 
   const handleGetAll: FormEventHandler = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    console.log('click');
-    
+    setInsideError("");
     setLoading(true);
     try {
       let response: MyResponse;
@@ -36,16 +36,25 @@ const MySellInput: FC<Props> = ({name, type, placeholder, error, value, handler,
         const { data }: { data: MyResponse } = await getMaxTransactionAmount(idToSell);
         response = data;
         
-        if (response.ok) setAllCallback(response.data.maxAmount);
+        if (response.ok) {
+          setAllCallback(response.data.maxAmount)
+        } else {
+          setInsideError(response.msg);
+        }
+
       } else if(ticker) {
         // fetch coin max
         const { data }: { data: MyResponse } = await getMaxTickerAmount(ticker);
         response = data;
 
-        console.log(response);
-        if (response.ok) setAllCallback(response.data[0].maxAmount);
+        if (response.ok) {
+          setAllCallback(response.data[0].maxAmount) 
+        } else {
+          setInsideError(response.msg)
+        }
+
       } else {
-        toast.error('Coin not found', { theme: "colored" });
+        toast.error('Unknown error', { theme: "colored" });
       }
 
       setLoading(false);
@@ -53,13 +62,18 @@ const MySellInput: FC<Props> = ({name, type, placeholder, error, value, handler,
 
     } catch (error: any) {
       setLoading(false);
-      toast.error('Something went wrong', { theme: "colored" });
+
+      if(error.response.data.msg === "Coin not found") {
+        setInsideError("Coin not found");
+      } else {
+        toast.error('Something went wrong', { theme: "colored" });
+      }
     }
   }
 
   return (
     <div className="w-3/5">
-      <label className={`${error ? 'error-input' : ''} my-label flex items-center px-5 py-2 mt-4`}>
+      <label className={`${error || insideError ? 'error-input' : ''} my-label flex items-center px-5 py-2 mt-4`}>
         <input 
           className="my-input w-3/4" 
           name={name} 
@@ -79,8 +93,8 @@ const MySellInput: FC<Props> = ({name, type, placeholder, error, value, handler,
         </button>
       </label>
 
-      <p className="text-red-500 font-regular text-sm text-center">
-        {error}
+      <p className="text-red-500 font-regular text-sm text-left">
+        {error || insideError}
       </p>
     </div>
   );

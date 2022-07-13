@@ -22,10 +22,11 @@ const MyErrorInput: FC<Props> = ({ name, type, placeholder, value, error, handle
           placeholder={placeholder} 
           onChange={handler} 
           value={value}
+          min={0}
         />
       </label>
 
-      <p className="text-red-500 font-regular text-sm text-center">
+      <p className="text-red-500 font-regular text-sm text-left">
         {error}
       </p>
     </div>
