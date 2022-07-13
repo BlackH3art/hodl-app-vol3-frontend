@@ -10,6 +10,7 @@ import HodlApp from './components/HodlApp/HodlApp';
 import Footer from './components/Footer/Footer';
 import Main from './components/Main/Main';
 import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy';
+import ProtectedRoutes from './components/Reusable/ProtectedRoutes';
 
 function App() {
 
@@ -27,8 +28,12 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signUp" element={<SignUpForm />} />
-          <Route path="/app/*" element={<HodlApp />} />
           <Route path="/policy" element={<PrivacyPolicy />} />
+
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/app/*" element={<HodlApp />} />
+          </Route>
+          
 
 
           <Route path="*" element={ <Navigate to="/" /> } />
