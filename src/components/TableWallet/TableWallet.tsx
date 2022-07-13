@@ -55,13 +55,13 @@ const TableWallet: FC = () => {
   }, []);
 
   const tableHeaders: string[] = [
-    "#", "Coin", "Ticker", "Price", "1h", "24h", "7 days", "Shares", "Profit/Loss"
+    "#", "Coin", "Ticker", "Price", "1h", "24h", "7 days", "Shares", "Invested",  "Profit/Loss"
   ];
 
   return(
     <>
       <thead>
-        <tr className="text-gray-300 border-b-[1px] border-gray-500">
+        <tr className="text-gray-200 border-b-[1px] border-gray-500">
           {tableHeaders.map((header: string, index: number) => (
             <HeaderCell key={index}>
               <p>
@@ -87,8 +87,9 @@ const TableWallet: FC = () => {
             key={index}
             nr={index + 1}
             ticker={item._id}
-            quantitySum={item.quantitySum}
-            averagePrice={item.averagePrice}
+            quantitySum={item.totalQuantity}
+            averagePrice={item.avgPrice}
+            totalInvested={item.totalInvested}
           />
         ))}
       </tbody>

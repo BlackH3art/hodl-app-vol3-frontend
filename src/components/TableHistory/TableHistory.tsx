@@ -69,7 +69,7 @@ const TableHistory: FC = () => {
   return(
     <>
       <thead>
-        <tr className="text-gray-300 border-b-[1px] border-gray-500">
+        <tr className="text-gray-200 border-b-[1px] border-gray-500">
           {tableHeaders.map((header: string, index: number) => (
             <HeaderCell key={index}>
               <p>
@@ -83,7 +83,7 @@ const TableHistory: FC = () => {
       <tbody>
         {loadingHistory || loadingTable ? (
           <LoadingRow length={tableHeaders.length} />
-        ) : historyItemsArray.length ? historyItemsArray.map((item: HistoryItemInterface, index: number) => (
+        ) : historyItemsArray.length ? historyItemsArray.sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt)).map((item: HistoryItemInterface, index: number) => (
           <RowHistory 
             nr={index + 1}
             key={index}

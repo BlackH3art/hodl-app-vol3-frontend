@@ -3,12 +3,14 @@ import { FC, ReactNode } from "react";
 interface Props {
   text1?: string;
   text2?: string;
-  value1: number | string | ReactNode;
-  value2: number | string | ReactNode;
-  pretext: boolean
+  value1?: number | string | ReactNode;
+  value2?: number | string | ReactNode;
+  pretext: boolean;
+  element1?: ReactNode;
+  element2?: ReactNode;
 }
 
-const DoubleRowCell: FC<Props> = ({ text1, text2, value1, value2, pretext }) => {
+const DoubleRowCell: FC<Props> = ({ text1, text2, value1, value2, pretext, element1, element2 }) => {
 
   return(
     <div className="flex">
@@ -20,9 +22,9 @@ const DoubleRowCell: FC<Props> = ({ text1, text2, value1, value2, pretext }) => 
         </div>
       )}
 
-      <div className="value-text-box text-right w-full pr-5">
-        <p className="text-gray-400">{value1}</p>
-        <p className="text-gray-400">{value2}</p>
+      <div className="value-text-box text-right w-full text-gray-400 pr-5">
+        {element1 ? element1 : (<p className="text-gray-400">{value1}</p>) }
+        {element2 ? element2 : (<p className="text-gray-400">{value2}</p>) }
       </div>
 
     </div>

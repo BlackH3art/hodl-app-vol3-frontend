@@ -18,10 +18,11 @@ interface Props {
   averagePrice: number;
   quantitySum: number;
   nr: number;
+  totalInvested: number;
 }
 
 
-const RowWallet: FC<Props> = ({ nr, ticker, averagePrice, quantitySum }) => {
+const RowWallet: FC<Props> = ({ nr, ticker, averagePrice, quantitySum, totalInvested }) => {
 
   const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
 
@@ -83,12 +84,17 @@ const RowWallet: FC<Props> = ({ nr, ticker, averagePrice, quantitySum }) => {
 
       <TableCell>
         <DoubleRowCell 
-          value1={usdFormatter(quantitySum * coinDetails.currentPrice)}
+          element1={<p className="font-semibold text-gray-300">{usdFormatter(quantitySum * coinDetails.currentPrice)}</p>}
           value2={<CryptoFormatter quantity={quantitySum} ticker={ticker} />}
           pretext={false}
         />
       </TableCell>
 
+      <TableCell>
+        <p className="text-right font-semibold text-gray-300">
+          {usdFormatter(totalInvested)}
+        </p>
+      </TableCell>
 
       <TableCell>
         <DoubleRowCell 

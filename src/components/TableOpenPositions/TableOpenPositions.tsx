@@ -64,7 +64,7 @@ const TableOpenPositions: FC<Props> = ({ showCallback }) => {
   return(
     <>
       <thead>
-        <tr className="text-gray-300 border-b-[1px] border-gray-500">
+        <tr className="text-gray-200 border-b-[1px] border-gray-500">
           {tableHeaders.map((header: string, index: number) => (
             <HeaderCell key={index}>
               <p className="text-center">

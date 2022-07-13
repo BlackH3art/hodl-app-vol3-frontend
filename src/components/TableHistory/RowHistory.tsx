@@ -93,7 +93,7 @@ const RowHistory: FC<Props> = ({ nr, ticker, type, sellingPrice, entryPrice, qua
       </TableCell>
 
       <TableCell>
-        <p className="text-center">
+        <p className="text-right">
           {usdFormatter(invested)}
         </p>
       </TableCell>

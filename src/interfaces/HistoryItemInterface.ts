@@ -10,4 +10,5 @@ export interface HistoryItemInterface {
   gain: number;
   closeDate: Date;
   openDate: Date;
+  createdAt: Date;
 }

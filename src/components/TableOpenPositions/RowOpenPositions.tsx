@@ -61,7 +61,7 @@ const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity, id, sho
 
       <TableCell>
         <DoubleRowCell 
-          value1={usdFormatter(quantity * coinDetails.currentPrice)}
+          element1={<p className="font-semibold text-gray-300">{usdFormatter(quantity * coinDetails.currentPrice)}</p>}
           value2={<CryptoFormatter quantity={quantity} ticker={ticker} />}
           pretext={false}
         />

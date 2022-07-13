@@ -11,6 +11,7 @@ export interface TransactionInterface {
 
 export interface AverageTransaction {
   _id: string;
-  averagePrice: number;
-  quantitySum: number;
+  totalInvested: number;
+  totalQuantity: number;
+  avgPrice: number;
 }
