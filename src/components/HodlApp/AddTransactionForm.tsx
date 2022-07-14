@@ -222,7 +222,7 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
 
 
   return (
-    <div className="glass2 absolute w-full h-screen flex items-center justify-center z-10">
+    <div className="glass2 fixed top-0 w-full h-screen flex items-center justify-center z-10">
 
       <div className="flex flex-col w-full md:w-[60%] lg:w-1/4 xl:w-1/5 lg:border-[1px] border-gray-700 bg-main">
         <form className="w-full flex flex-col items-center text-white pb-16">

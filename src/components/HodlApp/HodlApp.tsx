@@ -12,6 +12,7 @@ import TableWallet from "../TableWallet/TableWallet";
 import AddTransactionForm from "./AddTransactionForm";
 import SumbMenu from "./SubMenu";
 import AddButton from "../Reusable/AddButton";
+import Stats from "../Stats/Stats";
 
 
 const HodlApp: FC = () => {
@@ -21,7 +22,9 @@ const HodlApp: FC = () => {
 
   return(
     <TransactionContextProvider>
-      <section className="relative w-full flex flex-col items-center min-h-[80vh]">
+      <section className="w-full flex flex-col items-center min-h-[80vh]">
+
+        <Stats />
 
         <SumbMenu showCallback={setShowTransaction} />
 

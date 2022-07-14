@@ -2,7 +2,7 @@ import { Dispatch, FC, SetStateAction, useContext, useEffect, useState } from "r
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { getCoinsData, getTransactions } from "../../api";
+import { getAverage, getCoinsData, getTransactions } from "../../api";
 import { TransactionContext } from "../../context/TransactionContext";
 import { CoinDataInterface } from "../../interfaces/CoinDataInterface";
 import { TransactionInterface } from "../../interfaces/TransactionInterface";
@@ -20,7 +20,7 @@ interface Props {
 
 const TableOpenPositions: FC<Props> = ({ showCallback }) => {
 
-  const { transactions, setTransactions, loadingTable } = useContext(TransactionContext);
+  const { transactions, setTransactions, loadingTable, setWallet } = useContext(TransactionContext);
   const [loadingTransactions, setLoadingTransactions] = useState<boolean>(false);
   
   const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
@@ -44,6 +44,9 @@ const TableOpenPositions: FC<Props> = ({ showCallback }) => {
       try {
         const { data } = await getTransactions();
         setTransactions(data);
+
+        // const { data: averageItems } = await getAverage();
+        // setWallet(averageItems);
       } catch (error) {
         toast.error("Problem fetching transactions data", { theme: "colored" });
       }

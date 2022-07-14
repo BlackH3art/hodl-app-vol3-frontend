@@ -16,7 +16,7 @@ function App() {
 
   return (
     <Router>
-      <div className="app w-full min-h-[95vh] bg-main">
+      <div className="app relative w-full min-h-[95vh] bg-main">
 
         <ToastContainer />
 

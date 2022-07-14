@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { BsClockHistory } from 'react-icons/bs';
 
 import ButtonSecondary from "../Reusable/ButtonSecondary";
-import ButtonNavLink from "../Reusable/ButtonNavlink";
+import ButtonNavLink from "../Reusable/ButtonNavLink";
 
 interface Props {
   showCallback: Dispatch<SetStateAction<boolean>>
@@ -32,13 +32,11 @@ const SumbMenu: FC<Props> = ({ showCallback }) => {
 
       <div className="flex md:hidden">
         <div className="mr-2">
-          <Link to="/app/history">
-            <ButtonSecondary>
+          <ButtonNavLink to="/app/history" classes="">
               <p className="px-3">
                 <BsClockHistory size="1.5rem"  />
               </p>
-            </ButtonSecondary>
-          </Link>
+          </ButtonNavLink>
         </div>
       </div>
 
