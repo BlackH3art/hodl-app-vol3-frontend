@@ -158,3 +158,9 @@ code {
 .btn-navlink:hover, .btn-navlink-active:hover, .btn-secondary:hover, .btn-all:hover {
   background-color: #adadad11;
 }
+
+.cookie-modal {
+  background-color: #131722e3;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
