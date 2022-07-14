@@ -48,7 +48,7 @@ const Stats: FC = () => {
         setWallet(averageItems);
         calculateData(averageItems);
       } catch (error) {
-        toast.error('Error fetching data', { theme: "colored" })        
+        toast.error('Error fetching data', { theme: "colored" });     
       }
     }
 
