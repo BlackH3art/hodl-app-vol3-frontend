@@ -149,27 +149,12 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
   
       if(response.ok) {
 
-        switch (location.pathname) {
-          case "/app/hisotry" || "/app/hisotry/*":
-            // fetch history
-            const { data: historyItems } = await getHistory();
-            setHistory(historyItems);
-            break;
-          case "/app/positions":
-            // fetch transactions
-            const { data: transactionItems } = await getTransactions();
-            setTransactions(transactionItems);
-            break;
-          case "/app/wallet":
-            // fetch average
-            const { data: averageItems } = await getAverage();
-            setWallet(averageItems);
-            break;
-        
-          default:
-            navigate('/app/positions', { replace: true });
-            break;
-        }
+        const { data: historyItems } = await getHistory();
+        setHistory(historyItems);
+        const { data: transactionItems } = await getTransactions();
+        setTransactions(transactionItems);
+        const { data: averageItems } = await getAverage();
+        setWallet(averageItems);
 
         setLoading(false);
         setLoadingTable(false);

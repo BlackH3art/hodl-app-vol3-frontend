@@ -1,3 +1,5 @@
+import { CoinDataInterface } from "./CoinDataInterface";
+
 export interface TransactionInterface {
   _id: string;
   ticker: string;
@@ -14,4 +16,6 @@ export interface AverageTransaction {
   totalInvested: number;
   totalQuantity: number;
   avgPrice: number;
+  capital?: number;
+  coinData?: CoinDataInterface;
 }

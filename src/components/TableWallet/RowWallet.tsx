@@ -19,15 +19,12 @@ interface Props {
   quantitySum: number;
   nr: number;
   totalInvested: number;
+  coinDetails: CoinDataInterface | undefined;
 }
 
 
-const RowWallet: FC<Props> = ({ nr, ticker, averagePrice, quantitySum, totalInvested }) => {
+const RowWallet: FC<Props> = ({ nr, ticker, averagePrice, quantitySum, totalInvested, coinDetails }) => {
 
-  const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
-
-  const filteredDetailsArray: CoinDataInterface[] = coinsData.filter(item => item.ticker === ticker.toUpperCase());
-  const coinDetails = filteredDetailsArray[0];
 
   return !coinDetails ? (
     <LoadingRow length={9} />

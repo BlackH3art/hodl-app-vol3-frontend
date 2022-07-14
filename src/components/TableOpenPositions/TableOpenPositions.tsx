@@ -28,7 +28,6 @@ const TableOpenPositions: FC<Props> = ({ showCallback }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-
     async function getData() {
       const { data: coinsData } = await getCoinsData();
       dispatch(setCoinsData(coinsData));
@@ -37,11 +36,9 @@ const TableOpenPositions: FC<Props> = ({ showCallback }) => {
     if(coinsData.length === 0) {
       getData();
     }
-
   }, []);
 
   useEffect(() => {
-
     setLoadingTransactions(true);
     async function fetchTransactions() {
       try {
@@ -52,9 +49,10 @@ const TableOpenPositions: FC<Props> = ({ showCallback }) => {
       }
     }
 
-    fetchTransactions();
+    if(transactions.length === 0) {
+      fetchTransactions();
+    }
     setLoadingTransactions(false);
-
   }, []);
 
   const tableHeaders: string[] = [

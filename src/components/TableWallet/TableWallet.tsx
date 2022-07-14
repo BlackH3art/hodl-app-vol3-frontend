@@ -25,7 +25,6 @@ const TableWallet: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-
     async function getData() {
       const { data: coinsData } = await getCoinsData();
       dispatch(setCoinsData(coinsData));
@@ -34,11 +33,9 @@ const TableWallet: FC = () => {
     if(coinsData.length === 0) {
       getData();
     }
-
   }, []);
 
   useEffect(() => {
-
     setLoadingWallet(true);
     async function fetchWallet() {
       try {
@@ -49,14 +46,34 @@ const TableWallet: FC = () => {
       }
     }
 
-    fetchWallet();
+    if(wallet.length === 0) {
+      fetchWallet();
+    }
     setLoadingWallet(false);
-    
   }, []);
 
   const tableHeaders: string[] = [
     "#", "Coin", "Ticker", "Price", "1h", "24h", "7 days", "Shares", "Invested",  "Profit/Loss"
   ];
+
+
+  const walletWithCapital = wallet.map((mapItem: AverageTransaction) => {
+
+    const filteredDetailsArray: CoinDataInterface[] = coinsData.filter(coinData => coinData.ticker === mapItem._id.toUpperCase());
+    const coinDetails = filteredDetailsArray[0];
+
+    mapItem.capital = mapItem.totalQuantity * coinDetails.currentPrice;
+    mapItem.coinData = coinDetails;
+
+    return mapItem;
+  }).sort((a: AverageTransaction, b: AverageTransaction) => {
+
+    if(a.capital && b.capital) {
+      return b.capital - a.capital
+    } else {
+      return 0;
+    }
+  })
 
   return(
     <>
@@ -81,16 +98,16 @@ const TableWallet: FC = () => {
 
           <NoItemsRow length={tableHeaders.length} />
 
-        ) : wallet.map((item: AverageTransaction, index: number) => (
-
-          <RowWallet 
-            key={index}
-            nr={index + 1}
-            ticker={item._id}
-            quantitySum={item.totalQuantity}
-            averagePrice={item.avgPrice}
-            totalInvested={item.totalInvested}
-          />
+        ) : walletWithCapital.map((item: AverageTransaction, index: number) => (
+            <RowWallet 
+              key={index}
+              nr={index + 1}
+              ticker={item._id}
+              quantitySum={item.totalQuantity}
+              averagePrice={item.avgPrice}
+              totalInvested={item.totalInvested}
+              coinDetails={item.coinData}
+            />
         ))}
       </tbody>
 

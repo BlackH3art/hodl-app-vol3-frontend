@@ -28,7 +28,6 @@ const TableHistory: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-
     async function getData() {
       const { data: coinsData } = await getCoinsData();
       dispatch(setCoinsData(coinsData));
@@ -37,11 +36,9 @@ const TableHistory: FC = () => {
     if(coinsData.length === 0) {
       getData();
     }
-
   }, []);
 
   useEffect(() => {
-
     setLoadingHistory(true);
     async function fetchHistory() {
       try {
@@ -52,9 +49,10 @@ const TableHistory: FC = () => {
       }
     }
 
-    fetchHistory();
+    if(history.length === 0) {
+      fetchHistory();
+    }
     setLoadingHistory(false);
-
   }, []);
 
   const tableHeaders: string[] = [
