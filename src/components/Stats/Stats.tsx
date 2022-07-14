@@ -82,7 +82,7 @@ const Stats: FC = () => {
     const totalCapitalInvested = walletWithCapital.reduce((accum, current) => {
       if(current.totalInvested) {
         return accum + current.totalInvested;
-      } else {630483
+      } else {
         return accum;
       }
     }, 0);
