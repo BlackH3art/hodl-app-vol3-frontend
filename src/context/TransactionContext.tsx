@@ -36,7 +36,6 @@ const TransactionContextProvider: FC<Props> = ({ children }) => {
   const [loadingTable, setLoadingTable] = useState<boolean>(false);
 
 
-
   return(
     <TransactionContext.Provider value={{
       idToEdit,

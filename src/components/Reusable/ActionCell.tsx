@@ -3,18 +3,19 @@ import { AiOutlineEdit, AiTwotoneDelete } from 'react-icons/ai';
 import { FaHistory } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { deleteTransaction } from "../../api";
+import { deleteTransaction, getAverage, getHistory, getTransactions } from "../../api";
 import { TransactionContext } from "../../context/TransactionContext";
 
 interface Props {
   id: string;
   ticker: string;
   showCallback: Dispatch<SetStateAction<boolean>>;
+  setDeletedTransaction: Dispatch<SetStateAction<boolean>>;
 }
 
-const ActionCell: FC<Props> = ({ id, ticker, showCallback }) => {
+const ActionCell: FC<Props> = ({ id, ticker, showCallback, setDeletedTransaction }) => {
 
-  const { setIdToEdit } = useContext(TransactionContext);
+  const { setIdToEdit, setHistory, setTransactions, setWallet } = useContext(TransactionContext);
   
   const navigate = useNavigate();
 
@@ -28,6 +29,15 @@ const ActionCell: FC<Props> = ({ id, ticker, showCallback }) => {
 
     try {
       const { data } = await deleteTransaction(id);
+
+      const { data: historyItems } = await getHistory();
+      setHistory(historyItems);
+      const { data: transactionItems } = await getTransactions();
+      setTransactions(transactionItems);
+      const { data: averageItems } = await getAverage();
+      setWallet(averageItems);
+
+      setDeletedTransaction(prev => !prev);
 
       if(data.ok) {
         toast.success("Deleted transaction", { theme: "colored" });

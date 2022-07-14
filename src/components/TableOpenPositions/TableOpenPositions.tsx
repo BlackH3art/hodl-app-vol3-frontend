@@ -15,10 +15,11 @@ import NoItemsRow from "../Reusable/NoItemsRow";
 import RowOpenPositions from "./RowOpenPositions";
 
 interface Props {
-  showCallback: Dispatch<SetStateAction<boolean>>
+  showCallback: Dispatch<SetStateAction<boolean>>;
+  setDeletedTransaction: Dispatch<SetStateAction<boolean>>;
 }
 
-const TableOpenPositions: FC<Props> = ({ showCallback }) => {
+const TableOpenPositions: FC<Props> = ({ showCallback, setDeletedTransaction }) => {
 
   const { transactions, setTransactions, loadingTable, setWallet } = useContext(TransactionContext);
   const [loadingTransactions, setLoadingTransactions] = useState<boolean>(false);
@@ -89,6 +90,7 @@ const TableOpenPositions: FC<Props> = ({ showCallback }) => {
             entryPrice={item.entryPrice}
             quantity={item.quantity}
             showCallback={showCallback}
+            setDeletedTransaction={setDeletedTransaction}
           />
         ))) : (
           <NoItemsRow length={tableHeaders.length} />

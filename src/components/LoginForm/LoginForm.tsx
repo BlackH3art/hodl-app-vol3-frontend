@@ -51,9 +51,14 @@ const LoginForm: FC = () => {
 
       navigate('/app/positions', { replace: true });
     } catch (error: any) {
-      toast.error("Something went wrong!", { theme: "colored" }); 
+
       setLoading(false);
-      setError(error.response.data.msg);
+
+      if(error.response.data.msg === "Invalid login or password") {
+        setError(error.response.data.msg);
+      } else {
+        toast.error("Something went wrong!", { theme: "colored" }); 
+      }
     }
   }
 
@@ -77,7 +82,7 @@ const LoginForm: FC = () => {
             type="text"
             placeholder="E-mail"
             handler={handleChange}
-            error={false}
+            error={""}
             value={loginData.email}
           />
           <MyInput 
@@ -85,7 +90,7 @@ const LoginForm: FC = () => {
             type="password"
             placeholder="Password"
             handler={handleChange}
-            error={false}
+            error={""}
             value={loginData.password}
           />
 

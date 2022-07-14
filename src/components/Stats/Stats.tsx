@@ -25,7 +25,12 @@ const initialStats: Stats = {
   dolarPNL: 0,
 }
 
-const Stats: FC = () => {
+interface Props {
+  addTransaction: boolean;
+  deletedTransaction: boolean;
+}
+
+const Stats: FC<Props> = ({ addTransaction, deletedTransaction }) => {
 
   const { wallet, setWallet } = useContext(TransactionContext);
   const [stats, setStats] = useState<Stats>(initialStats);
@@ -52,7 +57,7 @@ const Stats: FC = () => {
       }
     }
 
-  }, []);
+  }, [addTransaction, deletedTransaction]);
 
 
 

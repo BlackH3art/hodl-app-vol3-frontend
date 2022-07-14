@@ -18,13 +18,15 @@ import Stats from "../Stats/Stats";
 const HodlApp: FC = () => {
 
   const [showAddTransaction, setShowTransaction] = useState<boolean>(false);
+  const [deletedTransaction, setDeletedTransaction] = useState<boolean>(false);
+
 
 
   return(
     <TransactionContextProvider>
       <section className="w-full flex flex-col items-center min-h-[80vh]">
 
-        <Stats />
+        <Stats addTransaction={showAddTransaction} deletedTransaction={deletedTransaction} />
 
         <SumbMenu showCallback={setShowTransaction} />
 
@@ -35,7 +37,7 @@ const HodlApp: FC = () => {
           <table className="w-full glass1" cellPadding="0" cellSpacing="0">
             <Routes>
 
-              <Route path="positions" element={ <TableOpenPositions showCallback={setShowTransaction} />} />
+              <Route path="positions" element={ <TableOpenPositions showCallback={setShowTransaction} setDeletedTransaction={setDeletedTransaction} />} />
               <Route path="wallet" element={ <TableWallet />} />
               <Route path="history" element={ <TableHistory />} />
               <Route path="history/:ticker" element={ <TableHistory />} />
