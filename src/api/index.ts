@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { TransactionData } from '../components/HodlApp/AddTransactionForm';
 import { LoginData } from '../components/LoginForm/LoginForm';
 import { SignUpFormData } from '../components/SignUpForm/SignUpForm';
@@ -6,15 +6,30 @@ import { CoinDataInterface } from '../interfaces/CoinDataInterface';
 import { HistoryItemInterface } from '../interfaces/HistoryItemInterface';
 import { MyResponse } from '../interfaces/MyResponse';
 import { AverageTransaction, TransactionInterface } from '../interfaces/TransactionInterface';
-import { UserInterface } from '../interfaces/UserInterface';
+import { UserInterface, UserResponseInterface } from '../interfaces/UserInterface';
 
 const API = axios.create({ 
-  baseURL: 'http://localhost:5000',
+  baseURL: 'https://hodlapp-vol3.herokuapp.com/',
   withCredentials: true,
 });
 
 
-export const login = (loginData: LoginData) => API.post<UserInterface>('/auth/login', loginData);
+API.interceptors.request.use((req: AxiosRequestConfig) => {
+
+  const token = localStorage.getItem("jwt");
+  
+  if(token) {
+    
+    req.headers = {
+      ['x-jwt-token']: token
+    }
+  };
+
+  return req;
+});
+
+
+export const login = (loginData: LoginData) => API.post<UserResponseInterface>('/auth/login', loginData);
 export const loggedIn = () => API.get<UserInterface>('/auth/loggedin');
 export const signUp = (signUpData: SignUpFormData) => API.post<MyResponse>('/user/register', signUpData);
 export const logout = () => API.get<MyResponse>('/auth/logout');

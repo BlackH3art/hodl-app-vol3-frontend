@@ -1,6 +1,6 @@
 export const shortenEmail = (givenEmail: string) => {
 
-  const email = givenEmail.trim();
+  const email = givenEmail?.trim();
 
   const atIndex = email.indexOf("@");
 

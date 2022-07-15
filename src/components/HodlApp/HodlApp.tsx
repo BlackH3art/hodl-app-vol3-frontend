@@ -21,7 +21,6 @@ const HodlApp: FC = () => {
   const [deletedTransaction, setDeletedTransaction] = useState<boolean>(false);
 
 
-
   return(
     <TransactionContextProvider>
       <section className="w-full flex flex-col items-center min-h-[80vh]">

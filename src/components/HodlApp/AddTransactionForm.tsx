@@ -7,13 +7,11 @@ import { MyResponse } from "../../interfaces/MyResponse";
 
 import MyErrorInput from "../Reusable/MyErrorInput";
 import { TransactionContext } from "../../context/TransactionContext";
-import { UserContext } from "../../context/UserContext";
 import { CoinDataInterface } from "../../interfaces/CoinDataInterface";
 
 import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { addCoinData } from "../../redux/features/coinsData-slice";
-import { useLocation, useNavigate } from "react-router-dom";
 import MySellInput from "../Reusable/MySellInput";
 import { validateAddTransaction } from "../../helpers/validateAddTransaction";
 
@@ -61,8 +59,6 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
   const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
 
   const dispatch = useDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -172,6 +168,7 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
         return;
 
       } else {
+        
         setLoading(false);
         setLoadingTable(false);
         toast.error(response.msg, { theme: "colored" }); 

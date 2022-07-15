@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { ClipLoader } from 'react-spinners';
 
 import { login } from "../../api";
-import { UserInterface } from "../../interfaces/UserInterface";
+import { UserInterface, UserResponseInterface } from "../../interfaces/UserInterface";
 
 import ButtonPrimary from "../Reusable/ButtonPrimary";
 import ButtonSecondary from "../Reusable/ButtonSecondary";
@@ -44,9 +44,13 @@ const LoginForm: FC = () => {
 
     try {
       
-      const { data: user }: { data: UserInterface } = await login(loginData);
+      const { data }: { data: UserResponseInterface } = await login(loginData);
+
+
+      localStorage.setItem('jwt', data.token);
+
       
-      setUser(user);
+      setUser(data.user);
       setLoading(false);
 
       navigate('/app/positions', { replace: true });

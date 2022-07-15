@@ -29,6 +29,8 @@ const TableOpenPositions: FC<Props> = ({ showCallback, setDeletedTransaction }) 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log('cookies -->', document.cookie)
+
     async function getData() {
       const { data: coinsData } = await getCoinsData();
       dispatch(setCoinsData(coinsData));

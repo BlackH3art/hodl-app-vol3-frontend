@@ -9,7 +9,7 @@ import { login, signUp } from "../../api";
 import { UserContext } from "../../context/UserContext";
 import { validateSignUpData } from "../../helpers/validateSignUpData";
 import { MyResponse } from "../../interfaces/MyResponse";
-import { UserInterface } from "../../interfaces/UserInterface";
+import { UserInterface, UserResponseInterface } from "../../interfaces/UserInterface";
 
 import ButtonPrimary from "../Reusable/ButtonPrimary";
 import ButtonSecondary from "../Reusable/ButtonSecondary";
@@ -84,17 +84,21 @@ const SignUpForm: FC = () => {
         const { data }: { data: MyResponse } = await signUp(signUpData);
   
         if(data.ok) {
-          const { data: user }: { data: UserInterface } = await login({ email: signUpData.email, password: signUpData.password });
+          const { data }: { data: UserResponseInterface } = await login({ email: signUpData.email, password: signUpData.password });
+          localStorage.setItem('jwt', data.token);
   
-          setUser(user);
+
+          setUser(data.user);
           setLoading(false);
           navigate('/app', { replace: true });
         }
         
       } catch (error: any) {
+        console.log(error);
+        
         toast.error("Something went wrong!", { theme: "colored" }); 
         setLoading(false);
-        setError(error.response.data.msg);
+        // setError(error.response.data.msg);
       }
     }
   }
