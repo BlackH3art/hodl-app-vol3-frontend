@@ -88,6 +88,10 @@ Clone frontend:
 ```
 git clone https://github.com/BlackH3art/hodl-app-vol3-frontend
 ```
+You will need to create file `./private/constants.ts` with your Syncfusion key for the stats to display properly:
+```js
+export const SYNCFUSION_KEY = 'Your Syncfusion key';
+```
 
 Then:
 ```
