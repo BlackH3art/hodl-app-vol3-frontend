@@ -45,11 +45,13 @@ const initialError: FormValidationError = {
 }
 
 interface Props {
-  showCallback: Dispatch<SetStateAction<boolean>>
+  showCallback: Dispatch<SetStateAction<boolean>>;
+  setTransactionsCounter: Dispatch<SetStateAction<number>>;
+  setLoadingStats: Dispatch<SetStateAction<boolean>>;
 }
 
 
-const AddTransactionForm: FC<Props> = ({ showCallback }) => {
+const AddTransactionForm: FC<Props> = ({ showCallback, setTransactionsCounter, setLoadingStats }) => {
 
   const [transactionData, setTransactionData] = useState<TransactionData>(initialTransactionData);
   const [error, setError] = useState<FormValidationError>(initialError);
@@ -106,6 +108,7 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
     e.preventDefault();
     setLoading(true);
     setLoadingTable(true);
+    setLoadingStats(true);
 
     setError(validateAddTransaction(transactionData));
 
@@ -116,6 +119,7 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
 
       setLoading(false);
       setLoadingTable(false);
+      setLoadingStats(false);
       return;
     }
 
@@ -154,6 +158,9 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
 
         setLoading(false);
         setLoadingTable(false);
+        setLoadingStats(false);
+
+        setTransactionsCounter(state => state + 1);
         setIdToSell(null);
         setIdToEdit(null);
         setError(initialError);
@@ -171,6 +178,7 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
         
         setLoading(false);
         setLoadingTable(false);
+        setLoadingStats(false);
         toast.error(response.msg, { theme: "colored" }); 
         return;
       }
@@ -178,6 +186,7 @@ const AddTransactionForm: FC<Props> = ({ showCallback }) => {
     } catch (err: any) {
       setLoading(false);
       setLoadingTable(false);
+      setLoadingStats(false);
 
       if(err.response.data.msg === "Coin not found") {
         setError({

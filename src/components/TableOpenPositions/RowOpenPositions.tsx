@@ -22,10 +22,10 @@ interface Props {
   entryPrice: number;
   quantity: number;
   showCallback: Dispatch<SetStateAction<boolean>>;
-  setDeletedTransaction: Dispatch<SetStateAction<boolean>>;
+  setTransactionsCounter: Dispatch<SetStateAction<number>>;
 }
 
-const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity, id, showCallback, setDeletedTransaction }) => {
+const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity, id, showCallback, setTransactionsCounter }) => {
 
   const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
   
@@ -94,7 +94,7 @@ const RowOpenPositions: FC<Props> = ({ nr, ticker, entryPrice, quantity, id, sho
       </TableCell>
 
       <TableCell>
-        <ActionCell id={id} ticker={ticker} showCallback={showCallback} setDeletedTransaction={setDeletedTransaction} />
+        <ActionCell id={id} ticker={ticker} showCallback={showCallback} setTransactionsCounter={setTransactionsCounter} />
       </TableCell>
     </tr>
   )

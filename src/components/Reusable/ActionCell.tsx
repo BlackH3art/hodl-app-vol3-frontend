@@ -10,10 +10,10 @@ interface Props {
   id: string;
   ticker: string;
   showCallback: Dispatch<SetStateAction<boolean>>;
-  setDeletedTransaction: Dispatch<SetStateAction<boolean>>;
+  setTransactionsCounter: Dispatch<SetStateAction<number>>;
 }
 
-const ActionCell: FC<Props> = ({ id, ticker, showCallback, setDeletedTransaction }) => {
+const ActionCell: FC<Props> = ({ id, ticker, showCallback, setTransactionsCounter }) => {
 
   const { setIdToEdit, setHistory, setTransactions, setWallet } = useContext(TransactionContext);
   
@@ -37,7 +37,7 @@ const ActionCell: FC<Props> = ({ id, ticker, showCallback, setDeletedTransaction
       const { data: averageItems } = await getAverage();
       setWallet(averageItems);
 
-      setDeletedTransaction(prev => !prev);
+      setTransactionsCounter(state => state + 1);
 
       if(data.ok) {
         toast.success("Deleted transaction", { theme: "colored" });

@@ -9,7 +9,8 @@ import { AverageTransaction, TransactionInterface } from '../interfaces/Transact
 import { UserInterface, UserResponseInterface } from '../interfaces/UserInterface';
 
 const API = axios.create({ 
-  baseURL: 'https://hodlapp-vol3.herokuapp.com/',
+  // baseURL: 'https://hodlapp-vol3.herokuapp.com/',
+  baseURL: 'http://localhost:5000',
   withCredentials: true,
 });
 

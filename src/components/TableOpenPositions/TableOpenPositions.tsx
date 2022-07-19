@@ -16,30 +16,14 @@ import RowOpenPositions from "./RowOpenPositions";
 
 interface Props {
   showCallback: Dispatch<SetStateAction<boolean>>;
-  setDeletedTransaction: Dispatch<SetStateAction<boolean>>;
+  setTransactionsCounter: Dispatch<SetStateAction<number>>;
 }
 
-const TableOpenPositions: FC<Props> = ({ showCallback, setDeletedTransaction }) => {
+const TableOpenPositions: FC<Props> = ({ showCallback, setTransactionsCounter }) => {
 
-  const { transactions, setTransactions, loadingTable, setWallet } = useContext(TransactionContext);
+  const { transactions, setTransactions, loadingTable } = useContext(TransactionContext);
   const [loadingTransactions, setLoadingTransactions] = useState<boolean>(false);
   
-  const coinsData: CoinDataInterface[] = useSelector<RootState, CoinDataInterface[]>((state) => state.coinsData.coinsData);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log('cookies -->', document.cookie)
-
-    async function getData() {
-      const { data: coinsData } = await getCoinsData();
-      dispatch(setCoinsData(coinsData));
-    }
-    
-    if(coinsData.length === 0) {
-      getData();
-    }
-  }, []);
 
   useEffect(() => {
     setLoadingTransactions(true);
@@ -48,9 +32,8 @@ const TableOpenPositions: FC<Props> = ({ showCallback, setDeletedTransaction }) 
         const { data } = await getTransactions();
         setTransactions(data);
 
-        // const { data: averageItems } = await getAverage();
-        // setWallet(averageItems);
       } catch (error) {
+        setLoadingTransactions(false);
         toast.error("Problem fetching transactions data", { theme: "colored" });
       }
     }
@@ -92,7 +75,7 @@ const TableOpenPositions: FC<Props> = ({ showCallback, setDeletedTransaction }) 
             entryPrice={item.entryPrice}
             quantity={item.quantity}
             showCallback={showCallback}
-            setDeletedTransaction={setDeletedTransaction}
+            setTransactionsCounter={setTransactionsCounter}
           />
         ))) : (
           <NoItemsRow length={tableHeaders.length} />

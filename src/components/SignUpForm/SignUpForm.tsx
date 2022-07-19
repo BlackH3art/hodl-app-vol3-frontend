@@ -143,7 +143,7 @@ const SignUpForm: FC = () => {
             <label className="flex items-center mt-4 text-sm">
               <input className="mr-2" name="terms" type="checkbox" checked={signUpData.terms} onChange={handleTermsChecked} required />
               <p>
-                I accept <Link className="link" to="policy"> privacy policy</Link>
+                I accept <Link className="link" to="/policy"> privacy policy</Link>
               </p>
             </label>
             
